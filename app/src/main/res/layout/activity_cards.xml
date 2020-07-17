@@ -36,13 +36,20 @@
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="10dp"/>
 
-    <com.jaredrummler.materialspinner.MaterialSpinner
-        android:layout_below="@id/cattext"
-        android:id="@+id/categoryspinner"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+    <EditText
+        android:id="@+id/search_product_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:hint="Search Products..."
+        android:textSize="20dp"
+        android:layout_margin="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_centerVertical="true"
+        android:padding="9dp"
+        android:textColorHint="@color/wh"
+        android:backgroundTint="@android:color/holo_green_dark"
+        />
+
 
     <FrameLayout
         android:layout_marginTop="120dp"

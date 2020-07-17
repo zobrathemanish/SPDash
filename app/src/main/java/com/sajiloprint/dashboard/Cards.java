@@ -1,5 +1,6 @@
 package com.sajiloprint.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -14,12 +15,18 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.sajiloprint.dashboard.models.CardsModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Cards extends AppCompatActivity {
 
@@ -32,6 +39,7 @@ public class Cards extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private StaggeredGridLayoutManager mLayoutManager;
     private TextView tvNoMovies;
+    private List<String> CardList;
 
     //Getting reference to Firebase Database
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -54,13 +62,47 @@ public class Cards extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        //Initializing our Recyclerview
+        CardList = new ArrayList<>();
+
+//        CardList.add("Cards");
+//        CardList.add("CorporateGifts");
+//        CardList.add("Calendar");
+//        CardList.add("WallDecors");
+//        CardList.add("Wearables");
+//        CardList.add("Photogifts");
+
+        mDatabaseReference.child("Products").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                CardList.clear();
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    String parent = snapshot.getKey();
+                    System.out.println("is this the card name? " + parent);
+                    CardList.add(parent);
+
+                }
+
+
+                }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+
+            }
+        });
+
+
+
+
+            //Initializing our Recyclerview
         cattv = findViewById(R.id.cattext);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         tvNoMovies = (TextView) findViewById(R.id.tv_no_cards);
         category = "Cards";
         spinner = findViewById(R.id.categoryspinner);
-        spinner.setItems("Cards", "CorporateGifts", "Stationary", "Calendar", "WallDecors", "Awards","Wearables","Photogifts");
+
+        spinner.setItems(CardList);
         spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
@@ -163,12 +205,22 @@ public class Cards extends AppCompatActivity {
                 mDatabaseReference.child("Products").child(category).getRef()
         ) {
             @Override
-            protected void populateViewHolder(MovieViewHolder viewHolder, CardsModel model, int position) {
+            protected void populateViewHolder(MovieViewHolder viewHolder, final CardsModel model, final int position) {
                 if(tvNoMovies.getVisibility()== View.VISIBLE){
                     tvNoMovies.setVisibility(View.GONE);
                 }
                 viewHolder.cardcategory.setText(model.getCardname());
                 Picasso.with(Cards.this).load(model.getCardimage()).into(viewHolder.cardimage);
+
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Cards.this, TryCard.class);
+                        intent.putExtra("cardname",model.getCardname());
+
+                        startActivity(intent);
+                    }
+                });
             }
         };
 
@@ -190,8 +242,12 @@ public class Cards extends AppCompatActivity {
         TextView cardcategory;
         ImageView cardimage;
 
+        View mView;
+
+
         public MovieViewHolder(View v) {
             super(v);
+            mView =v;
             cardcategory = (TextView) v.findViewById(R.id.cardcategory);
             cardimage = (ImageView) v.findViewById(R.id.cardimage);
         }
