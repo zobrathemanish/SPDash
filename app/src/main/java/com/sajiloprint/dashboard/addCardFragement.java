@@ -30,7 +30,11 @@ public class addCardFragement extends Fragment implements View.OnClickListener {
 
     private Button bSubmit;
     private String category;
-    private MaterialSpinner spinner;
+
+    public addCardFragement(String category) {
+        this.category=category;
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,16 +44,8 @@ public class addCardFragement extends Fragment implements View.OnClickListener {
         cardimage = v.findViewById(R.id.tiet_movie_logo);
         carddesc = v.findViewById(R.id.description);
         bSubmit = v.findViewById(R.id.b_submit);
-        category = "Cards";
-        spinner = v.findViewById(R.id.categoryspinner);
+//        category = "Cards";
 
-        spinner.setItems("Cards", "CorporateGifts", "Stationary", "Calendar", "WallDecors", "Awards","Wearables","Photogifts");
-        spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
-
-            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                category = item;
-            }
-        });
 
         //initializing database reference
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();

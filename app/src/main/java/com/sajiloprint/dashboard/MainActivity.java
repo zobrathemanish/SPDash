@@ -29,7 +29,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addCard(View view) {
-        startActivity(new Intent(MainActivity.this, SearchBarActivity.class));
+//        startActivity(new Intent(MainActivity.this, ProductView.class));
+        Intent intent = new Intent(MainActivity.this, ProductView.class);
+        intent.putExtra("value","Add");
+
+        startActivity(intent);
     }
 
     public void delCard(View view) {

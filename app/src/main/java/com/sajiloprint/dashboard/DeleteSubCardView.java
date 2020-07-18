@@ -32,7 +32,6 @@ public class DeleteSubCardView extends AppCompatActivity {
     //created for firebaseui android tutorial by Vamsi Tallapudi
     EditText search_edit_text;
 
-    private FloatingActionButton fab;
     private FloatingActionButton sub;
 
     ScaleAnimation shrinkAnim;
@@ -104,37 +103,7 @@ public class DeleteSubCardView extends AppCompatActivity {
         mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.frame_container, new deleteCardFragment())
-                        .addToBackStack(null)
-                        .commit();
-                //animation being used to make floating actionbar disappear
-                shrinkAnim.setDuration(400);
-                fab.setAnimation(shrinkAnim);
-                shrinkAnim.start();
-                shrinkAnim.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
 
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        //changing floating actionbar visibility to gone on animation end
-                        fab.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-
-                    }
-                });
-            }
-        });
 
         refreshproducts();
 
@@ -211,13 +180,6 @@ public class DeleteSubCardView extends AppCompatActivity {
     }
 
 
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (fab.getVisibility() == View.GONE)
-            fab.setVisibility(View.VISIBLE);
-    }
 
     //ViewHolder for our Firebase UI
     public static class MovieViewHolder extends RecyclerView.ViewHolder{

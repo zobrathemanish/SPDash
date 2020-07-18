@@ -106,7 +106,7 @@ public class AddCardview extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.frame_container, new addCardFragement())
+                        .replace(R.id.frame_container, new addCardFragement(category))
                         .addToBackStack(null)
                         .commit();
                 //animation being used to make floating actionbar disappear

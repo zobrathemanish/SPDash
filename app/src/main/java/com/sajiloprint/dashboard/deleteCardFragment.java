@@ -30,13 +30,16 @@ public class deleteCardFragment extends Fragment implements View.OnClickListener
     private MaterialSpinner spinner;
     private String UID="cards";
 
+    public deleteCardFragment(String category) {
+        this.category=category;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.delete_card_fragment,container,false);
 
         cardName = v.findViewById(R.id.tiet_movie_name);
         bSubmit = v.findViewById(R.id.b_submit);
-        category = "Cards";
 
         //initializing database reference
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();

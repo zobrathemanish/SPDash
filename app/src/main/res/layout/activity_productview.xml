@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Continue to Deletion"
+        android:text="Continue"
         android:layout_below="@id/categoryspinner"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"

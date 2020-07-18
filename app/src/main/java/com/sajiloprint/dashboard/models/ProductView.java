@@ -48,6 +48,7 @@ public class ProductView extends AppCompatActivity {
     private TextView cattv;
     private static final String userId = "53";
     private Button bSubmit;
+    private String addordelete;
 
 
 
@@ -60,6 +61,11 @@ public class ProductView extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle!=null)
+            addordelete = bundle.getString("value");
+        System.out.println("The card is" + addordelete);
 
         //Initializing our Recyclerview
         cattv = findViewById(R.id.cattext);
@@ -98,10 +104,19 @@ public class ProductView extends AppCompatActivity {
     private void myNewCard() {
         //Creating a movie object with user defined variables
         //referring to movies node and setting the values from movie object to that location
-        Intent intent = new Intent(ProductView.this, DeleteCardView.class);
-        intent.putExtra("show",category);
-        startActivity(intent);
+        if(addordelete!=null){
+            Intent intent = new Intent(ProductView.this, AddCardview.class);
+            System.out.println("The category here is" + category);
+            intent.putExtra("show", category);
+            startActivity(intent);
 
+        }
+        else {
+
+            Intent intent = new Intent(ProductView.this, DeleteCardView.class);
+            intent.putExtra("show", category);
+            startActivity(intent);
+        }
 
 
     }
@@ -110,8 +125,8 @@ public class ProductView extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (fab.getVisibility() == View.GONE)
-            fab.setVisibility(View.VISIBLE);
+//        if (fab.getVisibility() == View.GONE)
+//            fab.setVisibility(View.VISIBLE);
     }
 
 

@@ -105,7 +105,7 @@ public class DeleteCardView extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.frame_container, new deleteCardFragment())
+                        .replace(R.id.frame_container, new deleteCardFragment(category))
                         .addToBackStack(null)
                         .commit();
                 //animation being used to make floating actionbar disappear
