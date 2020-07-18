@@ -37,7 +37,7 @@ public class deleteCardFragment extends Fragment implements View.OnClickListener
         cardName = v.findViewById(R.id.tiet_movie_name);
         bSubmit = v.findViewById(R.id.b_submit);
         category = "Cards";
-       
+
         //initializing database reference
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -85,6 +85,8 @@ public class deleteCardFragment extends Fragment implements View.OnClickListener
                                 String card_name = datasnapshot.child("cardname").getValue(String.class);
                                 System.out.println(card_name);
                                 if(card_name.toLowerCase().contains(attribute.toLowerCase())) {
+                                    System.out.println("category is +"+ category);
+                                    System.out.println("UID is" + UID);
                                     mDatabaseReference.child("Products").child(category).child(UID).removeValue();
 
                                 }

@@ -15,16 +15,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sajiloprint.dashboard.models.CardsModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.sajiloprint.dashboard.models.CardsModel;
 import com.sajiloprint.dashboard.models.SearchAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class AddCardview extends AppCompatActivity {
+public class DeleteSubCardView extends AppCompatActivity {
 
     //created for firebaseui android tutorial by Vamsi Tallapudi
     EditText search_edit_text;
@@ -52,13 +55,13 @@ public class AddCardview extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cards);
+        setContentView(R.layout.activity_delcards);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -80,17 +83,16 @@ public class AddCardview extends AppCompatActivity {
         category = "Cards";
         mRecyclerView = findViewById(R.id.my_recycler_view);
 
+
+
         Bundle bundle = getIntent().getExtras();
-        if (bundle!=null)
-        card = bundle.getString("show");
+        card = bundle.getString("cardname");
+
+        category = card;
         System.out.println("The card is" + card);
 
         tvNoMovies = (TextView) findViewById(R.id.tv_no_cards);
 
-
-        if (card!=null)
-            category=card;
-        System.out.println("The category is " + category);
 
         shrinkAnim = new ScaleAnimation(1.15f, 0f, 1.15f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
@@ -106,7 +108,7 @@ public class AddCardview extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.frame_container, new addCardFragement())
+                        .replace(R.id.frame_container, new deleteCardFragment())
                         .addToBackStack(null)
                         .commit();
                 //animation being used to make floating actionbar disappear
@@ -165,34 +167,49 @@ public class AddCardview extends AppCompatActivity {
         //Say Hello to our new FirebaseUI android Element, i.e., FirebaseRecyclerAdapter
         FirebaseRecyclerAdapter<CardsModel,MovieViewHolder> adapter = new FirebaseRecyclerAdapter<CardsModel, MovieViewHolder>(
                 CardsModel.class,
-                R.layout.cards_cardview_layout,
+                R.layout.list_image_single,
                 MovieViewHolder.class,
                 //referencing the node where we want the database to store the data from our Object
                 mDatabaseReference.child("Products").child(category).getRef()
         ) {
             @Override
-            protected void populateViewHolder(MovieViewHolder viewHolder, final CardsModel model, final int position) {
+            protected void populateViewHolder(final MovieViewHolder viewHolder, final CardsModel model, final int position) {
+
                 if(tvNoMovies.getVisibility()== View.VISIBLE){
                     tvNoMovies.setVisibility(View.GONE);
                 }
                 viewHolder.cardcategory.setText(model.getCardname());
-                Picasso.with(AddCardview.this).load(model.getCardimage()).into(viewHolder.cardimage);
+                Picasso.with(DeleteSubCardView.this).load(model.getCardimage()).into(viewHolder.cardimage);
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(AddCardview.this, AddSubCard.class);
+                        Intent intent = new Intent(DeleteSubCardView.this, DeleteSubCard.class);
                         intent.putExtra("cardname",model.getCardname());
 
                         startActivity(intent);
                     }
+
+            });
+                viewHolder.carddelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Toast.makeText(ImageRecyclerAdapter.this,getItem(position).getPrname(),Toast.LENGTH_SHORT).show();
+                        removeAt(model.getCardname());
+                        //session.decreaseCartValue();
+                        //mContext.startActivity(new Intent(ImageRecyclerAdapter.this,ImageRecyclerAdapter.this));
+                    }
                 });
+
+
+
             }
         };
 
         mRecyclerView.setAdapter(adapter);
 
     }
+
 
 
     @Override
@@ -207,6 +224,7 @@ public class AddCardview extends AppCompatActivity {
 
         TextView cardcategory;
         ImageView cardimage;
+        ImageView carddelete;
 
 
         View mView;
@@ -217,6 +235,8 @@ public class AddCardview extends AppCompatActivity {
             mView =v;
             cardcategory = (TextView) v.findViewById(R.id.cardcategory);
             cardimage = (ImageView) v.findViewById(R.id.cardimage);
+            carddelete = v.findViewById(R.id.deletecard);
+
         }
     }
 
@@ -224,5 +244,59 @@ public class AddCardview extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    public void removeAt(final String cardname) {
+//        ImageList.remove(position);
+//        notifyItemRemoved(position);
+//        notifyItemRangeChanged(position, ImageList.size());
+
+        mDatabaseReference.child("Products").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (final DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    String parent = snapshot.getKey();
+
+                    mDatabaseReference.child("Products").child(parent).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (final DataSnapshot datasnapshot: dataSnapshot.getChildren()){
+                                String UID = datasnapshot.getKey();
+                                String card_name = datasnapshot.child("cardname").getValue(String.class);
+                                System.out.println(card_name);
+                                if(card_name.toLowerCase().contains(cardname.toLowerCase())) {
+                                    System.out.println("category is +"+ category);
+                                    System.out.println("UID is" + UID);
+                                    mDatabaseReference.child("Products").child(category).child(UID).removeValue();
+
+                                }
+
+
+
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }

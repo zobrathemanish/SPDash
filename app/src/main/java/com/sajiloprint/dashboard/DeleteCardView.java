@@ -180,7 +180,7 @@ public class DeleteCardView extends AppCompatActivity {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(DeleteCardView.this, DeleteSubCard.class);
+                        Intent intent = new Intent(DeleteCardView.this, DeleteSubCardView.class);
                         intent.putExtra("cardname",model.getCardname());
 
                         startActivity(intent);

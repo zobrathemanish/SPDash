@@ -48,7 +48,7 @@ public class DeleteSubCard extends AppCompatActivity {
 
         cardName = findViewById(R.id.tiet_movie_name);
         bSubmit = findViewById(R.id.b_submit);
-        category = "Cards";
+
         Bundle bundle = getIntent().getExtras();
         card = bundle.getString("cardname");
 
