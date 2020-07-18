@@ -33,17 +33,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextLabel">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/productid"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter Product Id"
-                    android:textColor="#fff"
-                    android:inputType="number"
-                    />
-            </android.support.design.widget.TextInputLayout>
+                android:theme="@style/TextLabel"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -75,16 +65,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextLabel">
-
-                <android.support.design.widget.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter Price"
-                    android:id="@+id/price"
-                    android:inputType="number"
-                    android:textColor="#fff"/>
-            </android.support.design.widget.TextInputLayout>
+                android:theme="@style/TextLabel"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"

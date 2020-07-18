@@ -1,0 +1,123 @@
+package com.sajiloprint.dashboard.models;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.sajiloprint.dashboard.AddCardview;
+import com.sajiloprint.dashboard.AddSubCard;
+import com.sajiloprint.dashboard.DeleteCardView;
+import com.sajiloprint.dashboard.models.CardsModel;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.squareup.picasso.Picasso;
+import com.sajiloprint.dashboard.R;
+
+public class ProductView extends AppCompatActivity {
+
+    //created for firebaseui android tutorial by Vamsi Tallapudi
+
+    private FloatingActionButton fab;
+
+    ScaleAnimation shrinkAnim;
+    private StaggeredGridLayoutManager mLayoutManager;
+    private TextView tvNoMovies;
+
+    //Getting reference to Firebase Database
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference mDatabaseReference = database.getReference();
+
+    private String category;
+    private MaterialSpinner spinner;
+    private TextView cattv;
+    private static final String userId = "53";
+    private Button bSubmit;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_productview);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        //Initializing our Recyclerview
+        cattv = findViewById(R.id.cattext);
+        tvNoMovies = (TextView) findViewById(R.id.tv_no_cards);
+        category = "Cards";
+        spinner = findViewById(R.id.categoryspinner);
+        bSubmit = findViewById(R.id.b_submit);
+
+        spinner.setItems("Cards", "CorporateGifts", "Calendar", "Stationary", "WallDecors", "Wearables","Photogifts","Awards");
+        spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+
+            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                category = item;
+
+            }
+        });
+
+
+        //scale animation to shrink floating actionbar
+        shrinkAnim = new ScaleAnimation(1.15f, 0f, 1.15f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+
+        bSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view.getId() == R.id.b_submit) {
+                    myNewCard();
+                }
+            }
+        });
+
+
+
+
+    }
+
+    private void myNewCard() {
+        //Creating a movie object with user defined variables
+        //referring to movies node and setting the values from movie object to that location
+        Intent intent = new Intent(ProductView.this, DeleteCardView.class);
+        intent.putExtra("show",category);
+        startActivity(intent);
+
+
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (fab.getVisibility() == View.GONE)
+            fab.setVisibility(View.VISIBLE);
+    }
+
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+}

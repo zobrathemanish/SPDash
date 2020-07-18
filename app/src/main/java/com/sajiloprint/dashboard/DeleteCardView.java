@@ -1,5 +1,6 @@
 package com.sajiloprint.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -10,67 +11,86 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sajiloprint.dashboard.models.CardsModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.sajiloprint.dashboard.models.CardsModel;
+import com.sajiloprint.dashboard.models.SearchAdapter;
 import com.squareup.picasso.Picasso;
 
-public class Subcards extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class DeleteCardView extends AppCompatActivity {
 
     //created for firebaseui android tutorial by Vamsi Tallapudi
+    EditText search_edit_text;
 
     private FloatingActionButton fab;
+    private FloatingActionButton sub;
 
     ScaleAnimation shrinkAnim;
     private RecyclerView mRecyclerView;
     private StaggeredGridLayoutManager mLayoutManager;
     private TextView tvNoMovies;
+    private ArrayList<String> CardList;
+    private ArrayList<String> ShowList;
+    SearchAdapter searchAdapter;
+
+
 
     //Getting reference to Firebase Database
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mDatabaseReference = database.getReference();
 
     private String category;
-    private MaterialSpinner spinner;
-    private TextView cattv;
     private static final String userId = "53";
+    private String card;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cards);
+        setContentView(R.layout.activity_delcards);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        //Initializing our Recyclerview
-        cattv = findViewById(R.id.cattext);
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        tvNoMovies = (TextView) findViewById(R.id.tv_no_cards);
+        CardList = new ArrayList<>();
+        ShowList = new ArrayList<>();
+
+//        CardList.add("Cards");
+//        CardList.add("CorporateGifts");
+//        CardList.add("Calendar");
+//        CardList.add("WallDecors");
+//        CardList.add("Wearables");
+//        CardList.add("Photogifts");
+
+
+
+
+            //Initializing our Recyclerview
         category = "Cards";
-        spinner = findViewById(R.id.categoryspinner);
-        spinner.setItems("Rectangular Card", "Square Card", "Rounded Corner Card");
-        spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+        mRecyclerView = findViewById(R.id.my_recycler_view);
 
-            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                category = item;
+        Bundle bundle = getIntent().getExtras();
+        if (bundle!=null)
+        card = bundle.getString("show");
+        System.out.println("The card is" + card);
 
-                refreshproducts();
-            }
-        });
+        tvNoMovies = (TextView) findViewById(R.id.tv_no_cards);
 
-        refreshproducts();
 
-        //scale animation to shrink floating actionbar
+        if (card!=null)
+            category=card;
+        System.out.println("The category is " + category);
+
         shrinkAnim = new ScaleAnimation(1.15f, 0f, 1.15f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
         if (mRecyclerView != null) {
@@ -81,12 +101,11 @@ public class Subcards extends AppCompatActivity {
         mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.frame_container, new addCardFragement())
+                        .replace(R.id.frame_container, new deleteCardFragment())
                         .addToBackStack(null)
                         .commit();
                 //animation being used to make floating actionbar disappear
@@ -114,6 +133,30 @@ public class Subcards extends AppCompatActivity {
             }
         });
 
+        refreshproducts();
+
+
+
+//        spinner = findViewById(R.id.categoryspinner);
+
+//
+//        spinner.setItems(CardList);
+//        spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+//
+//            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+//                category = item;
+//
+//                refreshproducts();
+//            }
+//        });
+//
+//        refreshproducts();
+
+
+
+
+
+
     }
 
     private void refreshproducts() {
@@ -127,12 +170,22 @@ public class Subcards extends AppCompatActivity {
                 mDatabaseReference.child("Products").child(category).getRef()
         ) {
             @Override
-            protected void populateViewHolder(MovieViewHolder viewHolder, CardsModel model, int position) {
+            protected void populateViewHolder(MovieViewHolder viewHolder, final CardsModel model, final int position) {
                 if(tvNoMovies.getVisibility()== View.VISIBLE){
                     tvNoMovies.setVisibility(View.GONE);
                 }
                 viewHolder.cardcategory.setText(model.getCardname());
-                Picasso.with(Subcards.this).load(model.getCardimage()).into(viewHolder.cardimage);
+                Picasso.with(DeleteCardView.this).load(model.getCardimage()).into(viewHolder.cardimage);
+
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(DeleteCardView.this, DeleteSubCard.class);
+                        intent.putExtra("cardname",model.getCardname());
+
+                        startActivity(intent);
+                    }
+                });
             }
         };
 
@@ -154,8 +207,12 @@ public class Subcards extends AppCompatActivity {
         TextView cardcategory;
         ImageView cardimage;
 
+        View mView;
+
+
         public MovieViewHolder(View v) {
             super(v);
+            mView =v;
             cardcategory = (TextView) v.findViewById(R.id.cardcategory);
             cardimage = (ImageView) v.findViewById(R.id.cardimage);
         }

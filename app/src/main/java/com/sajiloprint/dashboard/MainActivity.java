@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.sajiloprint.dashboard.models.ProductView;
+import com.sajiloprint.dashboard.models.SearchBarActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -26,11 +29,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addCard(View view) {
-        startActivity(new Intent(MainActivity.this,Cards.class));
+        startActivity(new Intent(MainActivity.this, SearchBarActivity.class));
     }
 
-    public void addSubCard(View view) {
-        startActivity(new Intent(MainActivity.this,Subcards.class));
+    public void delCard(View view) {
+        startActivity(new Intent(MainActivity.this, ProductView.class));
     }
 
 

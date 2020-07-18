@@ -64,21 +64,8 @@
                     android:layout_height="wrap_content"
                     android:theme="@style/TextLabel"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Select Category"
-                    android:textColor="#ecf0f1"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="5dp"/>
 
-                <com.jaredrummler.materialspinner.MaterialSpinner
-                    android:id="@+id/categoryspinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-
-                <Button
+            <Button
                     android:id="@+id/b_submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

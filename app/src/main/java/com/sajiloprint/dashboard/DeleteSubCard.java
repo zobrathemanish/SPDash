@@ -1,68 +1,95 @@
 package com.sajiloprint.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.airbnb.lottie.utils.JsonUtils;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jaredrummler.materialspinner.MaterialSpinner;
-import com.sajiloprint.dashboard.models.CardsModel;
 import com.sajiloprint.dashboard.models.DeleteCardsModel;
 
+public class DeleteSubCard extends AppCompatActivity {
 
-public class deleteCardFragment extends Fragment implements View.OnClickListener {
+    //created for firebaseui android tutorial by Vamsi Tallapudi
 
     private DatabaseReference mDatabaseReference;
     private TextInputEditText cardName;
+    private String textcardName;
+    private TextInputEditText cardimage;
+    private TextInputEditText carddesc;
+    private TextInputEditText cardprice;
+    private TextInputEditText productid;
+    private String card;
+
     private Button bSubmit;
     private String category;
-    private MaterialSpinner spinner;
-    private String UID="cards";
+    private String tobedeleted;
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.delete_card_fragment,container,false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.delete_card_fragment);
 
-        cardName = v.findViewById(R.id.tiet_movie_name);
-        bSubmit = v.findViewById(R.id.b_submit);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        cardName = findViewById(R.id.tiet_movie_name);
+        bSubmit = findViewById(R.id.b_submit);
         category = "Cards";
-       
+        Bundle bundle = getIntent().getExtras();
+        card = bundle.getString("cardname");
+
+        category = card;
+
+
+        bSubmit = findViewById(R.id.b_submit);
+
+
+        //tobedeleted = cardName.getText().toString();
+
+
+
         //initializing database reference
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
-        bSubmit.setOnClickListener(this);
-
-        return v;
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch(view.getId()){
-            case R.id.b_submit:
-                if(!isEmpty(cardName)){
-                    myNewCard(cardName.getText().toString().trim());
-                }else{
-                    if(isEmpty(cardName)){
-                        Toast.makeText(getContext(), "Please enter a name!", Toast.LENGTH_SHORT).show();
-                    }
+        //bSubmit.setOnClickListener(this);
+        bSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch(view.getId()){
+                    case R.id.b_submit:
+                        if(!isEmpty(cardName)){
+                            myNewCard(cardName.getText().toString().trim());
+                        }else{
+                            if(isEmpty(cardName)){
+                                Toast.makeText(getApplicationContext(), "Please enter a name!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        //to remove current fragment
+//                        getActivity().onBackPressed();
+                        break;
                 }
-                //to remove current fragment
-                getActivity().onBackPressed();
-                break;
-        }
-    }
+            }
+        });
 
+
+    }
+    private boolean isEmpty(TextInputEditText textInputEditText) {
+        return textInputEditText.getText().toString().trim().length() <= 0;
+    }
     private void myNewCard(String name) {
         //Creating a movie object with user defined variables
         DeleteCardsModel movie = new DeleteCardsModel(name);
@@ -83,9 +110,16 @@ public class deleteCardFragment extends Fragment implements View.OnClickListener
                             for (final DataSnapshot datasnapshot: dataSnapshot.getChildren()){
                                 String UID = datasnapshot.getKey();
                                 String card_name = datasnapshot.child("cardname").getValue(String.class);
-                                System.out.println(card_name);
+
                                 if(card_name.toLowerCase().contains(attribute.toLowerCase())) {
+                                    System.out.println("UID is " + UID);
+                                    System.out.println("is this the cardname?" + card_name);
+                                    System.out.println("The category is " + category);
+
                                     mDatabaseReference.child("Products").child(category).child(UID).removeValue();
+                                    Intent intent = new Intent(DeleteSubCard.this, DeleteCardView.class);
+                                    intent.putExtra("show",category);
+                                    startActivity(intent);
 
                                 }
 
@@ -93,8 +127,8 @@ public class deleteCardFragment extends Fragment implements View.OnClickListener
 
 
 
+                            }
                         }
-                    }
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
@@ -119,10 +153,7 @@ public class deleteCardFragment extends Fragment implements View.OnClickListener
 
 
     }
-    //check if edittext is empty
-    private boolean isEmpty(TextInputEditText textInputEditText) {
-        if (textInputEditText.getText().toString().trim().length() > 0)
-            return false;
-        return true;
-    }
+
+
+
 }

@@ -26,8 +26,7 @@ public class addCardFragement extends Fragment implements View.OnClickListener {
     private TextInputEditText cardName;
     private TextInputEditText cardimage;
     private TextInputEditText carddesc;
-    private TextInputEditText cardprice;
-    private TextInputEditText productid;
+
 
     private Button bSubmit;
     private String category;
@@ -40,8 +39,6 @@ public class addCardFragement extends Fragment implements View.OnClickListener {
         cardName = v.findViewById(R.id.tiet_movie_name);
         cardimage = v.findViewById(R.id.tiet_movie_logo);
         carddesc = v.findViewById(R.id.description);
-        cardprice = v.findViewById(R.id.price);
-        productid= v.findViewById(R.id.productid);
         bSubmit = v.findViewById(R.id.b_submit);
         category = "Cards";
         spinner = v.findViewById(R.id.categoryspinner);
@@ -61,6 +58,8 @@ public class addCardFragement extends Fragment implements View.OnClickListener {
 
         return v;
     }
+
+
 
     @Override
     public void onClick(View view) {

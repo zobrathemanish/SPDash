@@ -36,13 +36,14 @@
             android:theme="@style/DarkTheme" />
 
         <activity
-            android:name=".Cards"
+            android:name=".AddCardview"
             android:theme="@style/DarkTheme" />
 
-        <activity
-            android:name=".Subcards"
-            android:theme="@style/DarkTheme" />
-        <activity android:name=".TryCard" />
+        <activity android:name=".AddSubCard" />
+        <activity android:name=".models.SearchBarActivity" />
+        <activity android:name=".DeleteSubCard" />
+        <activity android:name=".models.ProductView" />
+        <activity android:name=".DeleteCardView" />
 
     </application>
 
