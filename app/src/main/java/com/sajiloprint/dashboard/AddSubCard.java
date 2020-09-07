@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +30,8 @@ public class AddSubCard extends AppCompatActivity {
 
     private Button bSubmit;
     private String category;
-    private MaterialSpinner spinner;
+    private TextView upload;
+    private boolean uploadflag;
 
 
     @Override
@@ -48,23 +50,21 @@ public class AddSubCard extends AppCompatActivity {
         cardprice = findViewById(R.id.price);
         productid = findViewById(R.id.productid);
         bSubmit = findViewById(R.id.b_submit);
+        upload = findViewById(R.id.uploadimages);
 
         Bundle bundle = getIntent().getExtras();
         card = bundle.getString("cardname");
 
         category = card;
 
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadflag = true;
+            }
+        });
 
-//        spinner = findViewById(R.id.categoryspinner);
-//
-//        spinner.setItems("Cards", "CorporateGifts", "Stationary", "Calendar", "WallDecors", "Awards", "Wearables", "Photogifts");
-//        spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
-//
-//            @Override
-//            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-//                category = item;
-//            }
-//        });
+
 
         //initializing database reference
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
@@ -73,22 +73,20 @@ public class AddSubCard extends AppCompatActivity {
         bSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch(view.getId()){
-                    case R.id.b_submit:
-                        if(!isEmpty(cardName) && !isEmpty(cardimage) && !isEmpty(carddesc) && !isEmpty(cardprice) && !isEmpty(productid) ){
-                            myNewCard(cardName.getText().toString().trim(),cardimage.getText().toString(),carddesc.getText().toString(),Float.parseFloat(cardprice.getText().toString()),Integer.parseInt(productid.getText().toString()));
-                        }else{
-                            if(isEmpty(cardName)){
-                                Toast.makeText(getApplicationContext(), "Please enter a name!", Toast.LENGTH_SHORT).show();
-                            }else if(isEmpty(cardimage)){
-                                Toast.makeText(getApplicationContext(), "Please specify a url for the image", Toast.LENGTH_SHORT).show();
-                            }else if(isEmpty(carddesc)){
-                                Toast.makeText(getApplicationContext(), "Please enter description", Toast.LENGTH_SHORT).show();
-                            }
+                if (view.getId() == R.id.b_submit) {
+                    if (!isEmpty(cardName) && (!isEmpty(cardimage) || uploadflag) && !isEmpty(carddesc) && !isEmpty(cardprice) && !isEmpty(productid)) {
+                        myNewCard(cardName.getText().toString().trim(), cardimage.getText().toString(), carddesc.getText().toString(), Float.parseFloat(cardprice.getText().toString()), Integer.parseInt(productid.getText().toString()));
+                    } else {
+                        if (isEmpty(cardName)) {
+                            Toast.makeText(getApplicationContext(), "Please enter a name!", Toast.LENGTH_SHORT).show();
+                        } else if (isEmpty(cardimage)) {
+                            Toast.makeText(getApplicationContext(), "Please specify a url or upload image", Toast.LENGTH_SHORT).show();
+                        } else if (isEmpty(carddesc)) {
+                            Toast.makeText(getApplicationContext(), "Please enter description", Toast.LENGTH_SHORT).show();
                         }
-                        //to remove current fragment
+                    }
+                    //to remove current fragment
 //                        getActivity().onBackPressed();
-                        break;
                 }
             }
         });
