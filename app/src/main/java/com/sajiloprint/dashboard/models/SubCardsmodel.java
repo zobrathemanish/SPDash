@@ -12,16 +12,31 @@ public class SubCardsmodel {
     public String cardimage;
     public String carddiscription;
     public float cardprice;
+    public String title;
+    public String size;
+    public String bulkdescription;
 
     public SubCardsmodel() {
     }
 
-    public SubCardsmodel(int cardid, String cardname, String cardimage, String carddiscription, float cardprice) {
+    public SubCardsmodel(int cardid, String cardname, String cardimage, String carddiscription, float cardprice, String title, String size, String bulkdescription) {
         this.cardid = cardid;
         this.cardname = cardname;
         this.cardimage = cardimage;
         this.carddiscription = carddiscription;
         this.cardprice = cardprice;
+        this.title = title;
+        this.size = size;
+        this.bulkdescription = bulkdescription;
+    }
+
+    public SubCardsmodel(int pid, String name, String image, String desc, float price) {
+        this.cardid = pid;
+        this.cardname = name;
+        this.cardimage = image;
+        this.carddiscription = desc;
+        this.cardprice = price;
+
     }
 
     public String getCardname() {

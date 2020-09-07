@@ -178,15 +178,30 @@ public class AddCardview extends AppCompatActivity {
                 viewHolder.cardcategory.setText(model.getCardname());
                 Picasso.with(AddCardview.this).load(model.getCardimage()).into(viewHolder.cardimage);
 
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(AddCardview.this, AddSubCard.class);
-                        intent.putExtra("cardname",model.getCardname());
+                if (model.getCardname().equals("Photo prints")){
+                    viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(AddCardview.this, AddPhotoSubCard.class);
+                            intent.putExtra("cardname", model.getCardname());
 
-                        startActivity(intent);
-                    }
-                });
+                            startActivity(intent);
+                        }
+                    });
+
+                }
+                else {
+
+                    viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(AddCardview.this, AddSubCard.class);
+                            intent.putExtra("cardname", model.getCardname());
+
+                            startActivity(intent);
+                        }
+                    });
+                }
             }
         };
 

@@ -1,34 +1,50 @@
 {
   "project_info": {
-    "project_number": "862584046093",
-    "firebase_url": "https://magicprint-fdbd3.firebaseio.com",
-    "project_id": "magicprint-fdbd3",
-    "storage_bucket": "magicprint-fdbd3.appspot.com"
+    "project_number": "16417896884",
+    "firebase_url": "https://sajiloprint-9f7ce.firebaseio.com",
+    "project_id": "sajiloprint-9f7ce",
+    "storage_bucket": "sajiloprint-9f7ce.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:862584046093:android:51f96e1e43dcba73120b44",
+        "mobilesdk_app_id": "1:16417896884:android:08f850df2bd5400734dae1",
         "android_client_info": {
           "package_name": "com.sajiloprint.dashboard"
         }
       },
       "oauth_client": [
         {
-          "client_id": "862584046093-og22a0hkqdkl0dspvb4v5n4uf9i11fj7.apps.googleusercontent.com",
+          "client_id": "16417896884-h5t202onbuvp56labuhmrdjv35374hv2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sajiloprint.dashboard",
+            "certificate_hash": "16ae4470c203f7b7d106feb5b63e6e73b76acc51"
+          }
+        },
+        {
+          "client_id": "16417896884-s902a096lkgievpfmsunqvnv8heha6aa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sajiloprint.dashboard",
+            "certificate_hash": "d1d9eaa110ba6d3d921ffff672297fd3ab049ba0"
+          }
+        },
+        {
+          "client_id": "16417896884-3ohkv0bjot3rgcl3oa32v4v2k84psimr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDPhlrpJQ5C-JOPbDjm-EljJzNlcLY3eYw"
+          "current_key": "AIzaSyACC7k5P3x24wObQCYLCJG-DIOVwZxBzWo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "862584046093-og22a0hkqdkl0dspvb4v5n4uf9i11fj7.apps.googleusercontent.com",
+              "client_id": "16417896884-3ohkv0bjot3rgcl3oa32v4v2k84psimr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

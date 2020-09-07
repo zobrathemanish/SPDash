@@ -45,6 +45,7 @@
         <activity android:name=".models.ProductView" />
         <activity android:name=".DeleteCardView" />
         <activity android:name=".DeleteSubCardView" />
+        <activity android:name=".AddPhotoSubCard" />
 
     </application>
 
