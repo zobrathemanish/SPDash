@@ -76,13 +76,13 @@ public class AddCardview extends AppCompatActivity {
 
 
 
-            //Initializing our Recyclerview
+        //Initializing our Recyclerview
         category = "Cards";
         mRecyclerView = findViewById(R.id.my_recycler_view);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle!=null)
-        card = bundle.getString("show");
+            card = bundle.getString("show");
         System.out.println("The card is" + card);
 
         tvNoMovies = (TextView) findViewById(R.id.tv_no_cards);
@@ -175,6 +175,7 @@ public class AddCardview extends AppCompatActivity {
                 if(tvNoMovies.getVisibility()== View.VISIBLE){
                     tvNoMovies.setVisibility(View.GONE);
                 }
+//                if (model.getShopEmail)
                 viewHolder.cardcategory.setText(model.getCardname());
                 Picasso.with(AddCardview.this).load(model.getCardimage()).into(viewHolder.cardimage);
 
