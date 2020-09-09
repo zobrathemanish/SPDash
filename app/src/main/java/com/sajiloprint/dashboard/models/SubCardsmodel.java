@@ -1,5 +1,7 @@
 package com.sajiloprint.dashboard.models;
 
+import java.util.List;
+
 /**
  * Created by kshitij on 16/1/18.
  */
@@ -15,6 +17,8 @@ public class SubCardsmodel {
     public String title;
     public String size;
     public String bulkdescription;
+    public List<String> productimages;
+    public String shopemail;
 
     public SubCardsmodel() {
     }
@@ -30,12 +34,14 @@ public class SubCardsmodel {
         this.bulkdescription = bulkdescription;
     }
 
-    public SubCardsmodel(int pid, String name, String image, String desc, float price) {
+    public SubCardsmodel(int pid, String name, String image, String desc, float price, String shopemail, List<String> productimages) {
         this.cardid = pid;
         this.cardname = name;
         this.cardimage = image;
         this.carddiscription = desc;
         this.cardprice = price;
+        this.shopemail = shopemail;
+        this.productimages = productimages;
 
     }
 
@@ -70,4 +76,23 @@ public class SubCardsmodel {
     public void setCardprice(float cardprice) {
         this.cardprice = cardprice;
     }
+
+    public String getShopemail() {
+        return shopemail;
+    }
+
+    public void setShopemail(String shopemail) {
+        this.shopemail = shopemail;
+    }
+
+    public List<String> getProductimages() {
+        return productimages;
+    }
+
+    public void setProductimages(List<String> productimages) {
+        this.productimages = productimages;
+    }
+
+
+
 }

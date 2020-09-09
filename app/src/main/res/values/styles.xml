@@ -9,7 +9,7 @@
     </style>
 
     <!--Defining colors for TextInputLayout's EditText-->
-    <style name="TextLabel" parent="TextAppearance.AppCompat">
+    <style name="TextLabel" parent="Widget.Design.TextInputLayout">
         <!-- Hint color and label color in FALSE state -->
         <item name="android:textColorHint">#bdc3c7</item>
         <item name="android:textSize">20sp</item>
