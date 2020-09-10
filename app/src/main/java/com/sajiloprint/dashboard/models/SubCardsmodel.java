@@ -19,6 +19,7 @@ public class SubCardsmodel {
     public String bulkdescription;
     public List<String> productimages;
     public String shopemail;
+    public String uploadimageid;
 
     public SubCardsmodel() {
     }
@@ -34,15 +35,14 @@ public class SubCardsmodel {
         this.bulkdescription = bulkdescription;
     }
 
-    public SubCardsmodel(int pid, String name, String image, String desc, float price, String shopemail, List<String> productimages) {
+    public SubCardsmodel(int pid, String name, String image, String desc, float price, String shopemail, String uploadimageid) {
         this.cardid = pid;
         this.cardname = name;
         this.cardimage = image;
         this.carddiscription = desc;
         this.cardprice = price;
         this.shopemail = shopemail;
-        this.productimages = productimages;
-
+        this.uploadimageid = uploadimageid;
     }
 
     public String getCardname() {
@@ -85,12 +85,12 @@ public class SubCardsmodel {
         this.shopemail = shopemail;
     }
 
-    public List<String> getProductimages() {
-        return productimages;
+    public String getUploadimageid() {
+        return uploadimageid;
     }
 
-    public void setProductimages(List<String> productimages) {
-        this.productimages = productimages;
+    public void setUploadimageid(String uploadimageid) {
+        this.uploadimageid = uploadimageid;
     }
 
 
