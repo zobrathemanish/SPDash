@@ -1,17 +1,21 @@
 package com.sajiloprint.dashboard;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -19,26 +23,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.loader.content.CursorLoader;
 
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
-import android.provider.OpenableColumns;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.sajiloprint.dashboard.models.ImageUploadModel;
 import com.sajiloprint.dashboard.models.SubCardsmodel;
 import com.sajiloprint.multipleimageselect.activities.AlbumSelectActivity;
@@ -51,6 +46,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
+
 public class AddSubCard extends AppCompatActivity {
 
     //created for firebaseui android tutorial by Vamsi Tallapudi
@@ -60,7 +57,7 @@ public class AddSubCard extends AppCompatActivity {
     private TextInputEditText cardimage;
     private TextInputEditText carddesc;
     private TextInputEditText cardprice;
-    private TextInputEditText productid;
+    //    private TextInputEditText productid;
     private String card;
 
     private Button bSubmit;
@@ -76,6 +73,8 @@ public class AddSubCard extends AppCompatActivity {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference mStorage = storage.getReference();
     private Uri imageuri;
+    private String image_url="null";
+    private KProgressHUD progressDialog;
 
 
 
@@ -95,7 +94,7 @@ public class AddSubCard extends AppCompatActivity {
         cardimage = findViewById(R.id.tiet_movie_logo);
         carddesc = findViewById(R.id.description);
         cardprice = findViewById(R.id.price);
-        productid = findViewById(R.id.productid);
+//        productid = findViewById(R.id.productid);
         bSubmit = findViewById(R.id.b_submit);
         upload = findViewById(R.id.uploadimages);
 
@@ -110,6 +109,7 @@ public class AddSubCard extends AppCompatActivity {
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+
                 uploadflag = true;
                 Intent intent = new Intent(AddSubCard.this, AlbumSelectActivity.class);
                 intent.putExtra(Constants.INTENT_EXTRA_LIMIT, 4);
@@ -127,14 +127,27 @@ public class AddSubCard extends AppCompatActivity {
         bSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bSubmit.setClickable(true);  //was false
+
+                hideKeyboard(AddSubCard.this);
+                progressDialog = KProgressHUD.create(AddSubCard.this)
+                        .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                        .setLabel("Please wait")
+                        .setCancellable(false)
+                        .setAnimationSpeed(2)
+                        .setDimAmount(0.5f)
+                        .show();
                 if (view.getId() == R.id.b_submit) {
-                    if (!isEmpty(cardName) && (!isEmpty(cardimage) || uploadflag) && !isEmpty(carddesc) && !isEmpty(cardprice) && !isEmpty(productid)) {
+                    if (!isEmpty(cardName) && (!isEmpty(cardimage) || uploadflag) && !isEmpty(carddesc) && !isEmpty(cardprice)) {
                         addImage();
-                        myNewCard(cardName.getText().toString().trim(), cardimage.getText().toString(), carddesc.getText().toString(), Float.parseFloat(cardprice.getText().toString()), Integer.parseInt(productid.getText().toString()));
+
+
+
                     } else {
+                        progressDialog.dismiss();
                         if (isEmpty(cardName)) {
                             Toast.makeText(getApplicationContext(), "Please enter a name!", Toast.LENGTH_SHORT).show();
-                        } else if (isEmpty(cardimage)) {
+                        } else if (isEmpty(cardimage) || !uploadflag) {
                             Toast.makeText(getApplicationContext(), "Please specify a url or upload image", Toast.LENGTH_SHORT).show();
                         } else if (isEmpty(carddesc)) {
                             Toast.makeText(getApplicationContext(), "Please enter description", Toast.LENGTH_SHORT).show();
@@ -146,7 +159,7 @@ public class AddSubCard extends AppCompatActivity {
             }
         });
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy-HH-mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         currdatetime = sdf.format(new Date());
 
 
@@ -157,6 +170,7 @@ public class AddSubCard extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             ArrayList<Image> images = data.getParcelableArrayListExtra(Constants.INTENT_EXTRA_IMAGES);
+            Toasty.info(AddSubCard.this, images.size()+" Image Selected", Toast.LENGTH_SHORT, true).show();
             StringBuilder stringBuffer = new StringBuilder();
             for (int i = 0, l = images.size(); i < l; i++) {
                 System.out.println("imagessss" + images.get(i).path);
@@ -184,11 +198,13 @@ public class AddSubCard extends AppCompatActivity {
 
         //Creating a movie object with user defined variables
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        SubCardsmodel movie = new SubCardsmodel(pid,name,image,desc,price, mAuth.getCurrentUser().getEmail(),uploadimageid);
+        SubCardsmodel movie = new SubCardsmodel(pid,name,image,desc,price, mAuth.getCurrentUser().getEmail(),firebaseImgAddresses);
         //referring to movies node and setting the values from movie object to that location
         mDatabaseReference.child("Products").child(category).push().setValue(movie);
+
         Intent intent = new Intent(AddSubCard.this, AddCardview.class);
         startActivity(intent);
+
 
 
 
@@ -202,6 +218,7 @@ public class AddSubCard extends AppCompatActivity {
         Uri[] uri = new Uri[ImagesLocationList.size()];
         for (int i = 0; i < ImagesLocationList.size(); i++) {
             uri[i] = Uri.parse("file://" + ImagesLocationList.get(i));
+            final int finalI = i;
 //                Uri.fromFile(new File("/sdcard/sample.jpg"))
             String fileName = getFileName(uri[i]);
             final StorageReference fileToUpload = mStorage.child("Products").child(fileName);
@@ -223,7 +240,23 @@ public class AddSubCard extends AppCompatActivity {
                         System.out.println("image uri is "+image);
 
                         firebaseImgAddresses.add(image);
-                        mDatabaseReference.child("ProductImages").push().setValue((uploadimage(uploadimageid, image)));
+
+                        if(isEmpty(cardimage))
+                            image_url = firebaseImgAddresses.get(0);
+                        else
+                            image_url = cardimage.getText().toString();
+
+                        progressDialog.dismiss();
+
+                        if (finalI==0) {
+                            Toasty.success(AddSubCard.this, "Product Registered Succesfully", Toast.LENGTH_SHORT, true).show();
+
+                        }
+                        if (firebaseImgAddresses.size() == ImagesLocationList.size())
+                            myNewCard(cardName.getText().toString().trim(), image_url, carddesc.getText().toString(), Float.parseFloat(cardprice.getText().toString()), Integer.parseInt(uploadimageid));
+
+//
+//                        mDatabaseReference.child("ProductImages").child(uploadimageid).push().setValue((uploadimage(uploadimageid, image)));
 
                     } else {
                         Toast.makeText(AddSubCard.this, "upload failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -319,6 +352,16 @@ public class AddSubCard extends AppCompatActivity {
         }
         return realPath;
     }
+
+
+    public static void hideKeyboard(Activity activity) {
+        View view = activity.findViewById(android.R.id.content);
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
 
 
 

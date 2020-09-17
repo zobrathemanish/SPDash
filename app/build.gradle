@@ -58,6 +58,11 @@ dependencies {
 
     implementation 'com.firebase:firebase-client-android:2.5.0'
 
+    implementation 'com.kaopiz:kprogresshud:1.1.0'
+
+    implementation 'com.github.GrenderG:Toasty:1.2.5'
+
+
 
 
 

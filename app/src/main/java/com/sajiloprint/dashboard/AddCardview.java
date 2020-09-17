@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.sajiloprint.dashboard.models.CardsModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -75,8 +76,6 @@ public class AddCardview extends AppCompatActivity {
 //        CardList.add("Photogifts");
 
 
-
-
         //Initializing our Recyclerview
         category = "Cards";
         mRecyclerView = findViewById(R.id.my_recycler_view);
@@ -104,6 +103,11 @@ public class AddCardview extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String currentuser = mAuth.getCurrentUser().getEmail();
+        if(currentuser.equals("sajiloprint@gmail.com") || currentuser.equals("manishofficial4378@gmail.com") || currentuser.equals("opensoft.tech110@gmail.com") ){
+                fab.setVisibility(View.VISIBLE);
+        }
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction()
@@ -180,7 +184,8 @@ public class AddCardview extends AppCompatActivity {
                 viewHolder.cardcategory.setText(model.getCardname());
                 Picasso.with(AddCardview.this).load(model.getCardimage()).into(viewHolder.cardimage);
 
-                if (model.getCardname().equals("Photo prints")){
+                if (model.getCardname().equals("Photo prints")||model.getCardname().equals("Photobooks") || model.getCardname().equals("Framed prints")
+                || model.getCardname().equals("Magnets") || model.getCardname().equals("Wood Prints") || model.getCardname().equals("Posters")){
                     viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

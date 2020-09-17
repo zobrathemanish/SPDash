@@ -16,6 +16,8 @@ public class SubCardsmodel {
     public float cardprice;
     public String title;
     public String size;
+    public float height;
+    public float width;
     public String bulkdescription;
     public List<String> productimages;
     public String shopemail;
@@ -24,7 +26,7 @@ public class SubCardsmodel {
     public SubCardsmodel() {
     }
 
-    public SubCardsmodel(int cardid, String cardname, String cardimage, String carddiscription, float cardprice, String title, String size, String bulkdescription) {
+    public SubCardsmodel(int cardid, String cardname, String cardimage, String carddiscription, float cardprice, String title, String size,float height, float width, String bulkdescription, String shopemail, List<String> productimages) {
         this.cardid = cardid;
         this.cardname = cardname;
         this.cardimage = cardimage;
@@ -33,6 +35,10 @@ public class SubCardsmodel {
         this.title = title;
         this.size = size;
         this.bulkdescription = bulkdescription;
+        this.shopemail = shopemail;
+        this.productimages = productimages;
+        this.height = height;
+        this.width = width;
     }
 
     public SubCardsmodel(int pid, String name, String image, String desc, float price, String shopemail, String uploadimageid) {
@@ -43,6 +49,17 @@ public class SubCardsmodel {
         this.cardprice = price;
         this.shopemail = shopemail;
         this.uploadimageid = uploadimageid;
+
+    }
+
+    public SubCardsmodel(int pid, String name, String image, String desc, float price, String shopemail, List<String> productimages) {
+        this.cardid = pid;
+        this.cardname = name;
+        this.cardimage = image;
+        this.carddiscription = desc;
+        this.cardprice = price;
+        this.shopemail = shopemail;
+        this.productimages = productimages;
     }
 
     public String getCardname() {
@@ -91,6 +108,30 @@ public class SubCardsmodel {
 
     public void setUploadimageid(String uploadimageid) {
         this.uploadimageid = uploadimageid;
+    }
+
+    public List<String> getProductimages() {
+        return productimages;
+    }
+
+    public void setProductimages(List<String> productimages) {
+        this.productimages = productimages;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
     }
 
 
