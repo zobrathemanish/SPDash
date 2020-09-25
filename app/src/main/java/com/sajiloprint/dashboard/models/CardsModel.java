@@ -10,6 +10,7 @@ public class CardsModel {
     public String cardname;
     public String cardimage;
     public String carddiscription;
+    public String shopemail;
 
     public CardsModel() {
     }
@@ -19,6 +20,7 @@ public class CardsModel {
         this.cardimage = cardimage;
         this.carddiscription = carddiscription;
     }
+
 
     public String getCardname() {
         return cardname;

@@ -245,6 +245,7 @@ public class AddPhotoSubCard extends AppCompatActivity {
         //referring to movies node and setting the values from movie object to that location
         mDatabaseReference.child("Products").child(category).push().setValue(movie);
         Intent intent = new Intent(AddPhotoSubCard.this, AddCardview.class);
+        intent.putExtra("show",category);
         startActivity(intent);
 
     }

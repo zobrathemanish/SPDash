@@ -1,12 +1,13 @@
 package com.sajiloprint.dashboard.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by kshitij on 16/1/18.
  */
 
-public class SubCardsmodel {
+public class SubCardsmodel implements Serializable {
 
 
     public int cardid;
@@ -52,7 +53,7 @@ public class SubCardsmodel {
 
     }
 
-    public SubCardsmodel(int pid, String name, String image, String desc, float price, String shopemail, List<String> productimages) {
+    public SubCardsmodel(int pid, String name, String image, String desc, float price,String bulkdescription, String shopemail, List<String> productimages) {
         this.cardid = pid;
         this.cardname = name;
         this.cardimage = image;
@@ -60,6 +61,7 @@ public class SubCardsmodel {
         this.cardprice = price;
         this.shopemail = shopemail;
         this.productimages = productimages;
+        this.bulkdescription = bulkdescription;
     }
 
     public String getCardname() {
@@ -133,6 +135,18 @@ public class SubCardsmodel {
     public void setWidth(float width) {
         this.width = width;
     }
+
+    public String getBulkdescription() {
+        return bulkdescription;
+    }
+
+    public void setBulkdescription(String bulkdescription) {
+        this.bulkdescription = bulkdescription;
+    }
+
+    public int getCardid() {return cardid;}
+    public void setCardid(int cardid) {this.cardid = cardid;}
+
 
 
 

@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.loader.content.CursorLoader;
 
+import com.airbnb.lottie.model.layer.ImageLayer;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -57,13 +58,14 @@ public class AddSubCard extends AppCompatActivity {
     private TextInputEditText cardimage;
     private TextInputEditText carddesc;
     private TextInputEditText cardprice;
+    private TextInputEditText bulkdescription;
     //    private TextInputEditText productid;
     private String card;
 
     private Button bSubmit;
     private String category;
     private TextView upload;
-    private boolean uploadflag;
+    private boolean uploadflag = false;
     private static final int RESULT_LOAD_IMAGE = 1;
     private List<String> firebaseImgAddresses;
     private List<String> ImagesLocationList;
@@ -97,6 +99,8 @@ public class AddSubCard extends AppCompatActivity {
 //        productid = findViewById(R.id.productid);
         bSubmit = findViewById(R.id.b_submit);
         upload = findViewById(R.id.uploadimages);
+        bulkdescription = findViewById(R.id.bulkdescription);
+
 
         ImagesLocationList = new ArrayList<>();
         firebaseImgAddresses = new ArrayList<>();
@@ -106,11 +110,19 @@ public class AddSubCard extends AppCompatActivity {
 
         category = card;
 
+//        if(!cardimage.getText().toString().equals("")){
+//            uploadflag = true;
+//        }
+
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+                ImagesLocationList.clear();
+                firebaseImgAddresses.clear();
 
                 uploadflag = true;
+
+
                 Intent intent = new Intent(AddSubCard.this, AlbumSelectActivity.class);
                 intent.putExtra(Constants.INTENT_EXTRA_LIMIT, 4);
                 startActivityForResult(intent, Constants.REQUEST_CODE);
@@ -138,8 +150,15 @@ public class AddSubCard extends AppCompatActivity {
                         .setDimAmount(0.5f)
                         .show();
                 if (view.getId() == R.id.b_submit) {
-                    if (!isEmpty(cardName) && (!isEmpty(cardimage) || uploadflag) && !isEmpty(carddesc) && !isEmpty(cardprice)) {
+                    if (!isEmpty(cardName) && (uploadflag || !isEmpty(cardimage)) && !isEmpty(carddesc) && !isEmpty(cardprice)) {
+                        uploadimageid = getordernumber();
+                        if(uploadflag)
                         addImage();
+                        else
+                            myNewCard(cardName.getText().toString().trim(), cardimage.getText().toString(), carddesc.getText().toString(), Float.parseFloat(cardprice.getText().toString()), Integer.parseInt(uploadimageid),bulkdescription.getText().toString());
+
+
+
 
 
 
@@ -147,10 +166,13 @@ public class AddSubCard extends AppCompatActivity {
                         progressDialog.dismiss();
                         if (isEmpty(cardName)) {
                             Toast.makeText(getApplicationContext(), "Please enter a name!", Toast.LENGTH_SHORT).show();
-                        } else if (isEmpty(cardimage) || !uploadflag) {
+                        } else if ( !uploadflag) {
                             Toast.makeText(getApplicationContext(), "Please specify a url or upload image", Toast.LENGTH_SHORT).show();
                         } else if (isEmpty(carddesc)) {
                             Toast.makeText(getApplicationContext(), "Please enter description", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (isEmpty(cardprice)) {
+                            Toast.makeText(getApplicationContext(), "Please enter price", Toast.LENGTH_SHORT).show();
                         }
                     }
                     //to remove current fragment
@@ -169,6 +191,7 @@ public class AddSubCard extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+
             ArrayList<Image> images = data.getParcelableArrayListExtra(Constants.INTENT_EXTRA_IMAGES);
             Toasty.info(AddSubCard.this, images.size()+" Image Selected", Toast.LENGTH_SHORT, true).show();
             StringBuilder stringBuffer = new StringBuilder();
@@ -194,15 +217,20 @@ public class AddSubCard extends AppCompatActivity {
     }
 
 
-    private void myNewCard( String name, String image, String desc, float price, int pid ) {
+    private void myNewCard( String name, String image, String desc, float price, int pid,String bulkdescription ) {
 
         //Creating a movie object with user defined variables
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        SubCardsmodel movie = new SubCardsmodel(pid,name,image,desc,price, mAuth.getCurrentUser().getEmail(),firebaseImgAddresses);
+        System.out.println("firebaseImgAddresses" + firebaseImgAddresses);
+        SubCardsmodel movie = new SubCardsmodel(pid,name,image,desc,price,bulkdescription, mAuth.getCurrentUser().getEmail(),firebaseImgAddresses);
         //referring to movies node and setting the values from movie object to that location
         mDatabaseReference.child("Products").child(category).push().setValue(movie);
 
+        progressDialog.dismiss();
+
         Intent intent = new Intent(AddSubCard.this, AddCardview.class);
+        intent.putExtra("show",category);
+
         startActivity(intent);
 
 
@@ -212,7 +240,6 @@ public class AddSubCard extends AppCompatActivity {
 
     private void addImage(){
 
-        uploadimageid = getordernumber();
 
 
         Uri[] uri = new Uri[ImagesLocationList.size()];
@@ -253,7 +280,7 @@ public class AddSubCard extends AppCompatActivity {
 
                         }
                         if (firebaseImgAddresses.size() == ImagesLocationList.size())
-                            myNewCard(cardName.getText().toString().trim(), image_url, carddesc.getText().toString(), Float.parseFloat(cardprice.getText().toString()), Integer.parseInt(uploadimageid));
+                            myNewCard(cardName.getText().toString().trim(), image_url, carddesc.getText().toString(), Float.parseFloat(cardprice.getText().toString()), Integer.parseInt(uploadimageid),bulkdescription.getText().toString());
 
 //
 //                        mDatabaseReference.child("ProductImages").child(uploadimageid).push().setValue((uploadimage(uploadimageid, image)));
@@ -305,6 +332,12 @@ public class AddSubCard extends AppCompatActivity {
         }
         return result;
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @SuppressLint("ObsoleteSdkInt")

@@ -66,7 +66,7 @@ public class ProductView extends AppCompatActivity {
         spinner = findViewById(R.id.categoryspinner);
         bSubmit = findViewById(R.id.b_submit);
 
-        spinner.setItems("Cards", "CorporateGifts", "Calendar", "Stationary", "WallDecors", "Wearables","Photogifts","Awards");
+        spinner.setItems("Cards", "CorporateGifts", "Calendar", "Stationary", "WallDecors", "Wearables","Photogifts","AwardsandMedals");
         spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {

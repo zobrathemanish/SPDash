@@ -1,6 +1,7 @@
 package com.sajiloprint.dashboard;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.ActionBar;
@@ -86,6 +87,8 @@ public class AddCardview extends AppCompatActivity {
         System.out.println("The card is" + card);
 
         tvNoMovies = (TextView) findViewById(R.id.tv_no_cards);
+
+
 
 
         if (card!=null)
@@ -182,7 +185,7 @@ public class AddCardview extends AppCompatActivity {
                 }
 //                if (model.getShopEmail)
                 viewHolder.cardcategory.setText(model.getCardname());
-                Picasso.with(AddCardview.this).load(model.getCardimage()).into(viewHolder.cardimage);
+                Picasso.with(AddCardview.this).load(model.getCardimage()).config(Bitmap.Config.RGB_565).resize(800, 600).into(viewHolder.cardimage);
 
                 if (model.getCardname().equals("Photo prints")||model.getCardname().equals("Photobooks") || model.getCardname().equals("Framed prints")
                 || model.getCardname().equals("Magnets") || model.getCardname().equals("Wood Prints") || model.getCardname().equals("Posters")){

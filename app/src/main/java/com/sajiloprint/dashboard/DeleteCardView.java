@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sajiloprint.dashboard.models.CardsModel;
@@ -72,7 +73,14 @@ public class DeleteCardView extends AppCompatActivity {
 //        CardList.add("Wearables");
 //        CardList.add("Photogifts");
 
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String currentuser = mAuth.getCurrentUser().getEmail();
+        if(currentuser.equals("sajiloprint@gmail.com") || currentuser.equals("manishofficial4378@gmail.com") || currentuser.equals("opensoft.tech110@gmail.com") ){
+            fab.setVisibility(View.VISIBLE);
+        }
 
 
             //Initializing our Recyclerview
