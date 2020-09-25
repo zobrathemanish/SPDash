@@ -54,9 +54,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@color/colorPrimaryDark"
-            android:text="Delete Product"
+            android:text="Edit/Delete Product"
             android:textColor="@android:color/white"
             android:onClick="delCard"
+            style="?android:attr/borderlessButtonStyle"/>
+
+        <Button
+            android:id="@+id/yourorders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="Your Orders"
+            android:textColor="@android:color/white"
+            android:onClick="orders"
             style="?android:attr/borderlessButtonStyle"/>
 
 

@@ -39,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, ProductView.class));
     }
 
+    public void orders(View view) {
+        startActivity(new Intent(MainActivity.this, Orders.class));
+    }
+
 
     @Override
     public boolean onSupportNavigateUp() {

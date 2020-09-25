@@ -3,8 +3,7 @@
     package="com.sajiloprint.dashboard">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,15 +11,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".Orders"></activity>
         <activity
             android:name=".MainActivity"
             android:theme="@style/DarkTheme" />
-
         <activity
             android:name=".SignupActivity"
             android:theme="@style/DarkTheme" />
-
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,19 +25,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ResetPasswordActivity"
             android:theme="@style/DarkTheme" />
-
         <activity
             android:name=".ProfileActivity"
             android:theme="@style/DarkTheme" />
-
         <activity
             android:name=".AddCardview"
             android:theme="@style/DarkTheme" />
-
         <activity android:name=".AddSubCard" />
         <activity android:name=".models.SearchBarActivity" />
         <activity android:name=".DeleteSubCard" />
@@ -48,17 +41,18 @@
         <activity android:name=".DeleteCardView" />
         <activity android:name=".DeleteSubCardView" />
         <activity android:name=".AddPhotoSubCard" />
-        <activity android:name="com.sajiloprint.multipleimageselect.activities.AlbumSelectActivity"
+        <activity
+            android:name="com.sajiloprint.multipleimageselect.activities.AlbumSelectActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/MultipleImageSelectTheme"
-            android:configChanges="orientation|screenSize"/>
-        <activity android:name="com.sajiloprint.multipleimageselect.activities.ImageSelectActivity"
+            android:theme="@style/MultipleImageSelectTheme" />
+        <activity
+            android:name="com.sajiloprint.multipleimageselect.activities.ImageSelectActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/MultipleImageSelectTheme"
-            android:configChanges="orientation|screenSize"/>
+            android:theme="@style/MultipleImageSelectTheme" />
         <activity android:name="com.sajiloprint.multipleimageselect.activities.HelperActivity" />
         <activity android:name=".EditSubCard" />
-
     </application>
 
 </manifest>
