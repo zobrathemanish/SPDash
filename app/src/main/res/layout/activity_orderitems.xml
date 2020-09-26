@@ -30,7 +30,7 @@
 
         <ImageView
             android:layout_marginLeft="5dp"
-            android:id="@+id/user_cartlist"
+            android:id="@+id/userphoto"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_weight="1"
@@ -140,6 +140,28 @@
                 android:text="Email: manish@gmail.com"
                 android:textSize="14dp"/>
 
+            <TextView
+                android:id="@+id/totalamount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Amount: Rs. 8,999"
+                android:textSize="14dp"
+                />
+
+            <TextView
+                android:id="@+id/orderdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order Date: 25-09-2020-14-33"
+                android:textSize="14dp"/>
+
+            <TextView
+                android:id="@+id/deliverydate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To be delivered on: 2-10-2020"
+                android:textSize="14dp"/>
+
         </LinearLayout>
     </LinearLayout>
 
@@ -213,7 +235,7 @@
                    />
 
                 <TextView
-                    android:id="@+id/cart_prtitle"
+                    android:id="@+id/prtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="6x8 Frame"
@@ -240,7 +262,7 @@
                    />
 
                 <TextView
-                    android:id="@+id/cart_prprice"
+                    android:id="@+id/prprice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rs. 500"
@@ -257,7 +279,7 @@
                 android:textSize="14dp"/>
 
             <TextView
-                android:id="@+id/cart_prcount"
+                android:id="@+id/prcount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Number of items(Quantity): 16"
@@ -271,19 +293,14 @@
                 >
 
             <TextView
+                android:id="@+id/totalamount2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total Amount: "
                 android:textSize="14dp"
                 />
 
-            <TextView
-                android:id="@+id/totalamount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rs. 8,999"
-                android:textSize="14dp"
-               />
+
 
         </LinearLayout>
 

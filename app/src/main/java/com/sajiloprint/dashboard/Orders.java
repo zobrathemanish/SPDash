@@ -174,7 +174,7 @@ public class Orders extends AppCompatActivity {
         });
         }
 
-    public void populateRecyclerView(String parent, String date, String itemsuid) {
+    public void populateRecyclerView(final String parent, final String date, String itemsuid) {
 
         System.out.println("parent " + parent + date + itemsuid);
 
@@ -184,7 +184,7 @@ public class Orders extends AppCompatActivity {
                 R.layout.cart_item_layout,
                 MovieViewHolder.class,
                 //referencing the node where we want the database to store the data from our Object
-                mDatabaseReference.child("orders").child(parent).child(date).child("items").getRef()
+                mDatabaseReference.child("orders").child(parent).child(date).getRef()
 
         ) {
 
@@ -207,14 +207,16 @@ public class Orders extends AppCompatActivity {
 
                 Picasso.with(Orders.this).load(model.getPrimage()).into(viewHolder.cardimage);
 
-                ordercollect.add(model);
+//                ordercollect.add(model);
 
                 viewHolder.item_product.setOnClickListener(new View.OnClickListener(){
 
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(Orders.this, Orderitems.class);
-                        intent.putExtra("product",model);
+                        intent.putExtra("ordercollect",getItem(position));
+                        intent.putExtra("userphone",parent);
+                        intent.putExtra("orderdate",date);
                         startActivity(intent);
                     }
                 });

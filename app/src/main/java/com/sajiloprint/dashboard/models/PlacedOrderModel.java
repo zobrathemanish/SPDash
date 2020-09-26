@@ -1,15 +1,17 @@
-package com.beingdev.magicprint.models;
+package com.sajiloprint.dashboard.models;
+
+import androidx.annotation.Keep;
 
 /**
  * Created by kshitij on 22/1/18.
  */
-
+@Keep
 public class PlacedOrderModel {
 
-    private String orderid,no_of_items,total_amount,delivery_date,payment_mode,deleiveryname,deliveryemail,deliverymobile_no,deliveryaddress,deliverypincode;
-    private String placed_user_name,Placed_user_email,Placed_user_mobile_no;
+    private String orderid,no_of_items,total_amount,delivery_date,payment_mode,deleiveryname,deliveryemail,deliverymobile_no,deliveryaddress;
+    private String placed_user_name,Placed_user_email,Placed_user_mobile_no,province,city,area, photo;
 
-    public PlacedOrderModel(String orderid, String no_of_items, String total_amount, String delivery_date, String payment_mode, String deleiveryname, String deliveryemail, String deliverymobile_no, String deliveryaddress, String deliverypincode, String placed_user_name, String getPlaced_user_email, String getPlaced_user_mobile_no) {
+    public PlacedOrderModel(String orderid, String no_of_items, String total_amount, String delivery_date, String payment_mode, String deleiveryname, String deliveryemail, String deliverymobile_no, String province, String city, String area, String placed_user_name, String getPlaced_user_email, String getPlaced_user_mobile_no, String photo) {
 
         this.orderid = orderid;
         this.no_of_items = no_of_items;
@@ -19,11 +21,15 @@ public class PlacedOrderModel {
         this.deleiveryname = deleiveryname;
         this.deliveryemail = deliveryemail;
         this.deliverymobile_no = deliverymobile_no;
-        this.deliveryaddress = deliveryaddress;
-        this.deliverypincode = deliverypincode;
+//        this.deliveryaddress = deliveryaddress;
+       // this.deliverypincode = deliverypincode;
+        this.province = province;
+        this.city = city;
+        this.area = area;
         this.placed_user_name = placed_user_name;
         this.Placed_user_email = getPlaced_user_email;
         this.Placed_user_mobile_no = getPlaced_user_mobile_no;
+        this.photo = photo;
     }
 
 
@@ -115,12 +121,12 @@ public class PlacedOrderModel {
         this.deliveryaddress = deliveryaddress;
     }
 
-    public String getDeliverypincode() {
-        return deliverypincode;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setDeliverypincode(String deliverypincode) {
-        this.deliverypincode = deliverypincode;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public String getPlaced_user_name() {

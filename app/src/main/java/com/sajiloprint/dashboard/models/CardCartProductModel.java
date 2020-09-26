@@ -143,6 +143,7 @@ public class CardCartProductModel implements Serializable {
         this.no_of_items = no_of_items;
     }
 
+
     public String getPrdesc() {
         return prdesc;
     }
