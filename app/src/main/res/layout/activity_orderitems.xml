@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:scrollbars="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="8dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Product Order and Customer Details"
+        android:textSize="24dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"/>
+
+    <View android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"
+        android:layout_margin="20dp"/>
+    <LinearLayout
+        android:id="@+id/item_user_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="3">
+
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/user_cartlist"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/drawerback"/>
+
+        <LinearLayout  android:id="@+id/layout_user_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="2"
+            android:paddingHorizontal="90dp"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text=" Order ID:"
+                    android:textSize="14dp"
+                    />
+
+                <TextView
+                    android:id="@+id/userid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="10101010101"
+                    android:gravity="center_vertical"
+                    android:textSize="14dp"
+                    />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Customer Name:"
+                    android:gravity="center_vertical"
+                    android:textSize="14dp"
+                    />
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Manish Dangi"
+                    android:gravity="center_vertical"
+                    android:textSize="14dp"
+                    />
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contact number: "
+                    android:textSize="14dp"
+                    />
+
+                <TextView
+                    android:id="@+id/mobile_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="9818045295"
+                    android:textSize="14dp"
+                    />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/paymentmode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payment mode: Cash-on Delivery"
+                android:textSize="14dp"/>
+
+            <TextView
+                android:id="@+id/useremail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email: manish@gmail.com"
+                android:textSize="14dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"
+        android:layout_margin="20dp"/>
+    <LinearLayout
+        android:id="@+id/item_product_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="3">
+
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/image_cartlist"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/drawerback"/>
+
+        <LinearLayout  android:id="@+id/layout_item_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    android:text="Product ID: "
+                    android:textSize="14dp"
+                    />
+
+                <TextView
+                    android:id="@+id/productid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="2400"
+                    android:textSize="14dp"
+                    />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Product Name: "
+                    android:textSize="14dp"
+                   />
+
+                <TextView
+                    android:id="@+id/cart_prtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="6x8 Frame"
+                    android:textSize="14dp"
+                    />
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Product Price: "
+                    android:textSize="14dp"
+                   />
+
+                <TextView
+                    android:id="@+id/cart_prprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rs. 500"
+                    android:textSize="14dp"
+                   />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/delivercharge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delivery charge: FREE"
+                android:textSize="14dp"/>
+
+            <TextView
+                android:id="@+id/cart_prcount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Number of items(Quantity): 16"
+                android:textSize="14dp"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Amount: "
+                android:textSize="14dp"
+                />
+
+            <TextView
+                android:id="@+id/totalamount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rs. 8,999"
+                android:textSize="14dp"
+               />
+
+        </LinearLayout>
+
+            <TextView
+                android:id="@+id/userimages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Associated images:"
+                android:textSize="14dp"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/userimage_recycler_view"
+                android:scrollbars="vertical"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"/>
+
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"
+        android:layout_margin="20dp"/>
+
+
+</LinearLayout>
+</ScrollView>

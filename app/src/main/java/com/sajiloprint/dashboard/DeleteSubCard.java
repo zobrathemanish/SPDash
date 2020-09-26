@@ -19,7 +19,7 @@ import com.sajiloprint.dashboard.models.DeleteCardsModel;
 
 public class DeleteSubCard extends AppCompatActivity {
 
-    //created for firebaseui android tutorial by Vamsi Tallapudi
+    //created for firebas`eui android tutorial by Vamsi Tallapudi
 
     private DatabaseReference mDatabaseReference;
     private TextInputEditText cardName;
