@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/useruploadimage"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:src="@drawable/drawerback"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/imgqty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:text="Image quantity:  1"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20dp"
+                android:includeFontPadding="false"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+>
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Image Location: "
+                android:textSize="15dp"
+                android:layout_marginTop="4dp"/>
+
+                <TextView
+                    android:id="@+id/imglocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="www.imgur.com"
+                    android:textSize="15dp"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+<!--        <View android:layout_width="match_parent"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:background="@color/colorPrimary"-->
+<!--            android:layout_marginTop="8dp"/>-->
+
+    </LinearLayout>
+</LinearLayout>
