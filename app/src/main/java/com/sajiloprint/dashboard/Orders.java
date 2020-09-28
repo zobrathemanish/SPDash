@@ -95,43 +95,58 @@ public class Orders extends AppCompatActivity {
                 .setDimAmount(0.5f)
                 .show();
 
-        mDatabaseReference.child("orders").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                    final String parent = dataSnapshot.getKey();
-                    System.out.println("parent is"+parent);
-                    mDatabaseReference.child("orders").child(parent).addListenerForSingleValueEvent(new ValueEventListener() {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild("orders")){
+                    mDatabaseReference.child("orders").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            for (final DataSnapshot datasnapshot : snapshot.getChildren()) {
-                                final String date = datasnapshot.getKey();
-                                System.out.println("Date is" + date);
-                                mDatabaseReference.child("orders").child(parent).child(date).addListenerForSingleValueEvent(new ValueEventListener() {
+                            for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                                final String parent = dataSnapshot.getKey();
+                                System.out.println("parent is"+parent);
+                                mDatabaseReference.child("orders").child(parent).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         for (final DataSnapshot datasnapshot : snapshot.getChildren()) {
-                                            String iditems=datasnapshot.getKey();
-                                            System.out.println("Id items are "+ iditems);
-
-                                            mDatabaseReference.child("orders").child(parent).child(date).child("items").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            final String date = datasnapshot.getKey();
+                                            System.out.println("Date is" + date);
+                                            mDatabaseReference.child("orders").child(parent).child(date).addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                     for (final DataSnapshot datasnapshot : snapshot.getChildren()) {
-                                                        final String itemsuid=datasnapshot.getKey();
-                                                        mDatabaseReference.child("orders").child(parent).child(date).child("items").child(itemsuid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        String iditems=datasnapshot.getKey();
+                                                        System.out.println("Id items are "+ iditems);
+
+                                                        mDatabaseReference.child("orders").child(parent).child(date).child("items").addListenerForSingleValueEvent(new ValueEventListener() {
                                                             @Override
                                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                                String shopemail = datasnapshot.child("shopemail").getValue(String.class);
-                                                                System.out.println("shopemail found "+ shopemail);
-                                                                if(shopemail.equals(currentuser) || currentuser.equals("sajiloprint@gmail.com") || currentuser.equals("manishofficial4378@gmail.com") || currentuser.equals("opensoft.tech110@gmail.com")){
+                                                                for (final DataSnapshot datasnapshot : snapshot.getChildren()) {
+                                                                    final String itemsuid=datasnapshot.getKey();
+                                                                    mDatabaseReference.child("orders").child(parent).child(date).child("items").child(itemsuid).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                        @Override
+                                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                            String shopemail = datasnapshot.child("shopemail").getValue(String.class);
+                                                                            System.out.println("shopemail found " + shopemail);
+                                                                            if (shopemail != null) {
+                                                                                if (shopemail.equals(currentuser) || currentuser.equals("sajiloprint@gmail.com") || currentuser.equals("manishofficial4378@gmail.com") || currentuser.equals("opensoft.tech110@gmail.com")) {
 
-                                                                        System.out.println("You have orders");
-                                                                        progressDialog.dismiss();
-                                                                        populateRecyclerView(parent,date,itemsuid);
-                                                                }
-                                                                else{
-                                                                    progressDialog.dismiss();
+                                                                                    System.out.println("You have orders");
+                                                                                    progressDialog.dismiss();
+                                                                                    populateRecyclerView(parent, date, itemsuid);
+                                                                                } else {
+                                                                                    progressDialog.dismiss();
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                                progressDialog.dismiss();
+                                                                        }
+
+                                                                        @Override
+                                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                                        }
+                                                                    });
                                                                 }
                                                             }
 
@@ -148,30 +163,34 @@ public class Orders extends AppCompatActivity {
 
                                                 }
                                             });
-                                            }
                                         }
+                                    }
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
 
                                     }
                                 });
-                                }
                             }
+                        }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
 
                         }
                     });
-                    }
                 }
+                else
+                    progressDialog.dismiss();
+            }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
+
+
         }
 
     public void populateRecyclerView(final String parent, final String date, String itemsuid) {
@@ -184,7 +203,7 @@ public class Orders extends AppCompatActivity {
                 R.layout.cart_item_layout,
                 MovieViewHolder.class,
                 //referencing the node where we want the database to store the data from our Object
-                mDatabaseReference.child("orders").child(parent).child(date).getRef()
+                mDatabaseReference.child("orders").child(parent).child(date).child("items").getRef()
 
         ) {
 
@@ -194,15 +213,14 @@ public class Orders extends AppCompatActivity {
                 if(tvNoMovies.getVisibility()== View.VISIBLE){
                     tvNoMovies.setVisibility(View.GONE);
                 }
-                float price = Float.parseFloat(model.getPrprice());
-                System.out.println("The price is " + price);
                 viewHolder.cardname.setText(model.getPrname());
                 System.out.println("product name is " + model.getPrname());
                 viewHolder.cardprice.setText("NRs."+ model.getNo_of_items()*Float.parseFloat(model.getPrprice()));
                 viewHolder.cardcount.setText("Quantity : "+model.getNo_of_items());
 
                 viewHolder.deliverycharge.setText("Delivery Charge:" + model.getDeliveryprice());
-                viewHolder.productid.setText(model.getPrid());
+                viewHolder.productid.setText(Integer.toString(model.getPrid()));
+
 
 
                 Picasso.with(Orders.this).load(model.getPrimage()).into(viewHolder.cardimage);

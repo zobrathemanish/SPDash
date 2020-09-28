@@ -1,5 +1,6 @@
 package com.sajiloprint.dashboard;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,10 +20,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class uploadAdapter extends RecyclerView.Adapter<uploadAdapter.UploadViewHolder> {
-    Context context;
-    ArrayList<String> cardNameList;
-    ArrayList<String> cardImageList;
-    ArrayList<ImageUploadModel> ItemList;
+    private Context context;
+    private ArrayList<ImageUploadModel> ItemList;
 
 
 
@@ -30,15 +29,15 @@ public class uploadAdapter extends RecyclerView.Adapter<uploadAdapter.UploadView
 
     static class UploadViewHolder extends RecyclerView.ViewHolder{
         ImageView cardImage;
-        public View mView;
-        public TextView imgqty;
-        public TextView imglocation;
+        View mView;
+        TextView imgqty;
+        TextView imglocation;
 
 
 
 
 
-        public UploadViewHolder( View itemView) {
+        UploadViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             cardImage = itemView.findViewById(R.id.useruploadimage);
@@ -49,7 +48,7 @@ public class uploadAdapter extends RecyclerView.Adapter<uploadAdapter.UploadView
 
     }
 
-    public uploadAdapter(Context context, ArrayList<ImageUploadModel> ItemList) {
+    uploadAdapter(Context context, ArrayList<ImageUploadModel> ItemList) {
         this.context = context;
 
         this.ItemList = ItemList;
@@ -65,23 +64,18 @@ public class uploadAdapter extends RecyclerView.Adapter<uploadAdapter.UploadView
     @Override
     public void onBindViewHolder( UploadViewHolder holder, int position) {
 
-        holder.imgqty.setText("Image Quantity: " + ItemList.get(position).getQuantity());
-        holder.imglocation.setText(ItemList.get(position).getFimageLocation());
+//        if(ItemList.get(position).getQuantity()==null)
+//            holder.imgqty.setVisibility(View.GONE);
+//        else
+//            holder.imgqty.setText("Image Quantity: " + ItemList.get(position).getQuantity());
+//
+//        System.out.println("Itemlistfimage" + ItemList.get(position).getFimageLocation());
+//        holder.imglocation.setText(ItemList.get(position).getFimageLocation());
 
         Picasso.with(context).load(ItemList.get(position).getFimageLocation()).config(Bitmap.Config.RGB_565).resize(800, 600).into(holder.cardImage);
+        holder.imglocation.setText("home");
+        holder.imgqty.setText("qty");
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-
-
-
-
-
-
-           }
-
-       });
 
     }
 
@@ -89,7 +83,7 @@ public class uploadAdapter extends RecyclerView.Adapter<uploadAdapter.UploadView
 
     @Override
     public int getItemCount() {
-        return cardNameList.size();
+        return ItemList.size();
 
     }
 

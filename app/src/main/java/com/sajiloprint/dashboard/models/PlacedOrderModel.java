@@ -11,6 +11,10 @@ public class PlacedOrderModel {
     private String orderid,no_of_items,total_amount,delivery_date,payment_mode,deleiveryname,deliveryemail,deliverymobile_no,deliveryaddress;
     private String placed_user_name,Placed_user_email,Placed_user_mobile_no,province,city,area, photo;
 
+    public PlacedOrderModel(){
+
+    }
+
     public PlacedOrderModel(String orderid, String no_of_items, String total_amount, String delivery_date, String payment_mode, String deleiveryname, String deliveryemail, String deliverymobile_no, String province, String city, String area, String placed_user_name, String getPlaced_user_email, String getPlaced_user_mobile_no, String photo) {
 
         this.orderid = orderid;

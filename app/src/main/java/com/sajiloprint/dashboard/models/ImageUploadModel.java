@@ -11,11 +11,18 @@ import java.io.Serializable;
 public class ImageUploadModel implements Serializable {
 
     private String uploadimageid;
-    String imageLocation;
-    String quantity;
+    private String imageLocation;
+    private String quantity;
 
 
     public ImageUploadModel() {
+    }
+
+    public ImageUploadModel(String uploadimageid, String imageLocation, String quantity) {
+        this.uploadimageid = uploadimageid;
+        this.imageLocation = imageLocation;
+        this.quantity = quantity;
+
     }
 
     public ImageUploadModel(String uploadimageid, String imageLocation) {
@@ -28,13 +35,11 @@ public class ImageUploadModel implements Serializable {
 
 
 
-
-
     public String getFimageLocation() {
         return imageLocation;
     }
 
-    public void setFimageLocation(String primage) {
+    public void setFimageLocation(String imageLocation) {
         this.imageLocation= imageLocation;
     }
 

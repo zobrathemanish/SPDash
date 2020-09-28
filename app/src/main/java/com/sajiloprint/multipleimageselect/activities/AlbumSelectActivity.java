@@ -24,17 +24,16 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
 import com.sajiloprint.dashboard.R;
-//import com.beingdev.magicprint.models.CardCartProductModel;
-//import com.beingdev.magicprint.models.GenericProductModel;
 import com.sajiloprint.multipleimageselect.adapters.CustomAlbumSelectAdapter;
 import com.sajiloprint.multipleimageselect.helpers.Constants;
-import com.sajiloprint.multipleimageselect.models.Album;
-import com.sajiloprint.multipleimageselect.adapters.CustomAlbumSelectAdapter;
 import com.sajiloprint.multipleimageselect.models.Album;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
+
+//import com.beingdev.magicprint.models.CardCartProductModel;
+//import com.beingdev.magicprint.models.GenericProductModel;
 
 /**
  * Created by Darshan on 4/14/2015.

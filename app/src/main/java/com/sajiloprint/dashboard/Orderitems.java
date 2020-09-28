@@ -3,6 +3,8 @@ package com.sajiloprint.dashboard;
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -69,16 +71,16 @@ public class Orderitems extends AppCompatActivity {
             mRecyclerview.setHasFixedSize(true);
         }
         //using staggered grid pattern in recyclerview
-        StaggeredGridLayoutManager mLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerview.setLayoutManager(mLayoutManager);
+        mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerview.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         Bundle bundle = getIntent().getExtras();
-        ordercollect =  (CardCartProductModel) getIntent().getSerializableExtra("product");
+        ordercollect =  (CardCartProductModel) getIntent().getSerializableExtra("ordercollect");
         String parent = bundle.get("userphone").toString();
         String date = bundle.get("orderdate").toString();
 
         getuserdata(parent,date);
-        productid.setText(ordercollect.getPrid());
+        productid.setText(Integer.toString(ordercollect.getPrid()));
         productname.setText(ordercollect.getPrname());
         productprice.setText(ordercollect.getPrprice());
         deliverycharge.setText("Delivery charge: " + ordercollect.getDeliveryprice());
@@ -99,7 +101,7 @@ public class Orderitems extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (final DataSnapshot datasnapshot : snapshot.getChildren()) {
                     final String UID = datasnapshot.getKey();
-                    if(!parent.equals("items")){
+                    if(!UID.equals("items")){
                         System.out.println("Here thess UID is" + UID);
 
                         PlacedOrderModel ordermodel = snapshot.child(UID).getValue(PlacedOrderModel.class);
@@ -112,7 +114,7 @@ public class Orderitems extends AppCompatActivity {
                         orderdate.setText("Order Date: "+ date);
                         deliverydate.setText("To be delivered on: "+ ordermodel.getDelivery_date());
                         totalamount.setText("Total Amount: "+ ordermodel.getTotal_amount());
-                        totalamount2.setText("Total Amount: "+ ordermodel.getTotal_amount());
+//                        totalamount2.setText("Total Amount: "+ ordermodel.getTotal_amount());
 
 
                         Picasso.with(Orderitems.this).load(ordermodel.getPhoto()).into(userphoto);
@@ -134,23 +136,24 @@ public class Orderitems extends AppCompatActivity {
 
     public void populateRecyclerView(final String imageid) {
 
-        mDatabaseReference.child("orders").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabaseReference.child("Images").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     final String parent = dataSnapshot.getKey();
-                    mDatabaseReference.child("orders").child(parent).addListenerForSingleValueEvent(new ValueEventListener() {
+                    mDatabaseReference.child("Images").child(parent).addListenerForSingleValueEvent(new ValueEventListener() {
 
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for (final DataSnapshot datasnapshot : snapshot.getChildren()) {
                                 String UID = datasnapshot.getKey();
-                                System.out.println("Here the UID is" + UID);
                                 String uploadimageid = datasnapshot.child("uploadimageid").getValue(String.class);
                                 if(imageid.equals(uploadimageid)){
                                     ImageUploadModel uploadmodel = snapshot.child(UID).getValue(ImageUploadModel.class);
                                     imageslist.add(uploadmodel);
+                                    System.out.println(uploadmodel.getQuantity());
+
                                 }
 
 
@@ -183,25 +186,6 @@ public class Orderitems extends AppCompatActivity {
 
 
 
-    }
-
-    //viewHolder for our Firebase UI
-    public static class MovieViewHolder extends RecyclerView.ViewHolder{
-
-        ImageView useruploadimage;
-        TextView imgqty;
-        TextView uploadlocation;
-
-        View mView;
-        public MovieViewHolder(View v) {
-            super(v);
-            mView = v;
-            useruploadimage = v.findViewById(R.id.useruploadimage);
-            imgqty = v.findViewById(R.id.imgqty);
-            uploadlocation = v.findViewById(R.id.imglocation);
-
-
-        }
     }
 
 }
