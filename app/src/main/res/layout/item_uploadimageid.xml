@@ -49,11 +49,30 @@
                     android:layout_height="wrap_content"
                     android:text="www.imgur.com"
                     android:textSize="15dp"
-                    android:layout_marginTop="4dp"/>
+                    android:layout_marginTop="4dp"
+                    android:linksClickable="true"
+                    android:layout_centerInParent="true"
+                    />
+
             </LinearLayout>
+
+            <Button
+                android:id="@+id/downloadimage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/colorPrimaryDark"
+                android:text="Download Image"
+                android:textColor="@android:color/white"
+                android:onClick="orders"
+                style="?android:attr/borderlessButtonStyle"/>
+
+
+
+
         </LinearLayout>
 
-<!--        <View android:layout_width="match_parent"-->
+        <!--        <View android:layout_width="match_parent"-->
 <!--            android:layout_height="1dp"-->
 <!--            android:background="@color/colorPrimary"-->
 <!--            android:layout_marginTop="8dp"/>-->
