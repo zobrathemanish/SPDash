@@ -1,6 +1,5 @@
 package com.sajiloprint.dashboard;
 
-import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,17 +7,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import android.content.ClipData;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,10 +21,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.sajiloprint.dashboard.models.CardCartProductModel;
-import com.sajiloprint.dashboard.models.SubCardsmodel;
-import com.squareup.picasso.Picasso;
+import com.sajiloprint.dashboard.models.Orderbydateadapter;
+import com.sajiloprint.usersession.UserSession;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Orders extends AppCompatActivity {
 
@@ -41,6 +37,15 @@ public class Orders extends AppCompatActivity {
     private FirebaseAuth auth;
     ArrayList<CardCartProductModel> ordercollect;
     private KProgressHUD progressDialog;
+    private HashMap<String,String> user;
+    private UserSession session;
+    private String shopname;
+    private String shopemail,shopmobile;
+    List<String> datelist;
+    Orderbydateadapter orderbydateadapter;
+
+
+
 
 
 
@@ -62,6 +67,8 @@ public class Orders extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         ordercollect = new ArrayList<>();
+        datelist = new ArrayList<>();
+        getValues();
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         currentuser = mAuth.getCurrentUser().getEmail();
@@ -81,6 +88,7 @@ public class Orders extends AppCompatActivity {
         myorders();
 
 
+
     }
 
 
@@ -95,75 +103,36 @@ public class Orders extends AppCompatActivity {
                 .setDimAmount(0.5f)
                 .show();
 
-        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabaseReference.child("shopusers").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+               ordercollect.clear();
                 if(dataSnapshot.hasChild("orders")){
-                    mDatabaseReference.child("orders").addListenerForSingleValueEvent(new ValueEventListener() {
+                    mDatabaseReference.child("shopusers").child("orders").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                                 final String parent = dataSnapshot.getKey();
-                                System.out.println("parent is"+parent);
-                                mDatabaseReference.child("orders").child(parent).addListenerForSingleValueEvent(new ValueEventListener() {
+                                System.out.println("parent is" + parent + shopmobile);
+                                if(parent.equals(shopmobile)){
+                                    System.out.println("here");
+                                mDatabaseReference.child("shopusers").child("orders").child(parent).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         for (final DataSnapshot datasnapshot : snapshot.getChildren()) {
                                             final String date = datasnapshot.getKey();
                                             System.out.println("Date is" + date);
-                                            mDatabaseReference.child("orders").child(parent).child(date).addListenerForSingleValueEvent(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                    for (final DataSnapshot datasnapshot : snapshot.getChildren()) {
-                                                        String iditems=datasnapshot.getKey();
-                                                        System.out.println("Id items are "+ iditems);
+                                            datelist.add(date);
 
-                                                        mDatabaseReference.child("orders").child(parent).child(date).child("items").addListenerForSingleValueEvent(new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                                for (final DataSnapshot datasnapshot : snapshot.getChildren()) {
-                                                                    final String itemsuid=datasnapshot.getKey();
-                                                                    mDatabaseReference.child("orders").child(parent).child(date).child("items").child(itemsuid).addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                        @Override
-                                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                                            String shopemail = datasnapshot.child("shopemail").getValue(String.class);
-                                                                            System.out.println("shopemail found " + shopemail);
-                                                                            if (shopemail != null) {
-                                                                                if (shopemail.equals(currentuser) || currentuser.equals("sajiloprint@gmail.com") || currentuser.equals("manishofficial4378@gmail.com") || currentuser.equals("opensoft.tech110@gmail.com")) {
+                                            if(tvNoMovies.getVisibility()== View.VISIBLE){
+                                                  tvNoMovies.setVisibility(View.GONE);
+                                                  }
 
-                                                                                    System.out.println("You have orders");
-                                                                                    progressDialog.dismiss();
-                                                                                    populateRecyclerView(parent, date, itemsuid);
-                                                                                } else {
-                                                                                    progressDialog.dismiss();
-                                                                                }
-                                                                            }
-                                                                            else
-                                                                                progressDialog.dismiss();
-                                                                        }
+                                            progressDialog.dismiss();
 
-                                                                        @Override
-                                                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                                                        }
-                                                                    });
-                                                                }
-                                                            }
-
-                                                            @Override
-                                                            public void onCancelled(@NonNull DatabaseError error) {
-
-                                                            }
-                                                        });
-                                                    }
-                                                }
-
-                                                @Override
-                                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                                }
-                                            });
                                         }
+                                        orderbydateadapter = new Orderbydateadapter(Orders.this, datelist);
+                                        mRecyclerView.setAdapter(orderbydateadapter);
                                     }
 
                                     @Override
@@ -171,6 +140,10 @@ public class Orders extends AppCompatActivity {
 
                                     }
                                 });
+                            }
+                                else{
+                                    progressDialog.dismiss();
+                                }
                             }
                         }
 
@@ -193,97 +166,89 @@ public class Orders extends AppCompatActivity {
 
         }
 
-    public void populateRecyclerView(final String parent, final String date, String itemsuid) {
-
-        System.out.println("parent " + parent + date + itemsuid);
-
-        //Say Hello to our new FirebaseUI android Element, i.e., FirebaseRecyclerAdapter
-        final FirebaseRecyclerAdapter<CardCartProductModel,MovieViewHolder> adapter = new FirebaseRecyclerAdapter<CardCartProductModel, MovieViewHolder>(
-                CardCartProductModel.class,
-                R.layout.cart_item_layout,
-                MovieViewHolder.class,
-                //referencing the node where we want the database to store the data from our Object
-                mDatabaseReference.child("orders").child(parent).child(date).child("items").getRef()
-
-        ) {
-
-            @Override
-            @Keep
-            protected void populateViewHolder(final MovieViewHolder viewHolder, final CardCartProductModel model, final int position) {
-                if(tvNoMovies.getVisibility()== View.VISIBLE){
-                    tvNoMovies.setVisibility(View.GONE);
-                }
-                viewHolder.cardname.setText(model.getPrname());
-                System.out.println("product name is " + model.getPrname());
-                viewHolder.cardprice.setText("NRs."+ model.getNo_of_items()*Float.parseFloat(model.getPrprice()));
-                viewHolder.cardcount.setText("Quantity : "+model.getNo_of_items());
-
-                viewHolder.deliverycharge.setText("Delivery Charge:" + model.getDeliveryprice());
-                viewHolder.productid.setText(Integer.toString(model.getPrid()));
-
-
-
-                Picasso.with(Orders.this).load(model.getPrimage()).into(viewHolder.cardimage);
-
+//    public void populateRecyclerView(final String date) {
+//
+////        System.out.println("parent " + parent + date + itemsuid);
+//
+//        //Say Hello to our new FirebaseUI android Element, i.e., FirebaseRecyclerAdapter
+//        final FirebaseRecyclerAdapter<CardCartProductModel,MovieViewHolder> adapter = new FirebaseRecyclerAdapter<CardCartProductModel, MovieViewHolder>(
+//                CardCartProductModel.class,
+//                R.layout.cart_item_layout,
+//                MovieViewHolder.class,
+//                //referencing the node where we want the database to store the data from our Object
+//                mDatabaseReference.child("ShopOrders").child(getPlaced_user_mobile_no).child(date).getRef()
+//
+//        ) {
+//
+//            @Override
+//            @Keep
+//            protected void populateViewHolder(final MovieViewHolder viewHolder, final CardCartProductModel model, final int position) {
+//                if(tvNoMovies.getVisibility()== View.VISIBLE){
+//                    tvNoMovies.setVisibility(View.GONE);
+//                }
+//                viewHolder.cardname.setText(model.getPrname());
+//                System.out.println("product name is " + model.getPrname());
+//                viewHolder.cardprice.setText("NRs."+ model.getNo_of_items()*Float.parseFloat(model.getPrprice()));
+//                viewHolder.cardcount.setText("Quantity : "+model.getNo_of_items());
+//
+//                viewHolder.deliverycharge.setText("Delivery Charge:" + model.getDeliveryprice());
+//                viewHolder.productid.setText(Integer.toString(model.getPrid()));
+//
+//
+//
+//                Picasso.with(Orders.this).load(model.getPrimage()).into(viewHolder.cardimage);
+//
 //                ordercollect.add(model);
-
-                viewHolder.item_product.setOnClickListener(new View.OnClickListener(){
-
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Orders.this, Orderitems.class);
-                        intent.putExtra("ordercollect",getItem(position));
-                        intent.putExtra("userphone",parent);
-                        intent.putExtra("orderdate",date);
-                        startActivity(intent);
-                    }
-                });
-
-
-
-
-//                viewHolder.carddelete.setOnClickListener(new View.OnClickListener() {
+//
+//                viewHolder.item_product.setOnClickListener(new View.OnClickListener(){
+//
 //                    @Override
 //                    public void onClick(View v) {
-//                        Toast.makeText(Cart.this,getItem(position).getPrname(),Toast.LENGTH_SHORT).show();
-//                        getRef(position).removeValue();
-//                        session.decreaseCartValue();
-//                        deletedatabaseimage(getItem(position).getimageid());
-//                        startActivity(new Intent(Cart.this,Cart.class));
-//                        finish();
+//                        Intent intent = new Intent(Orders.this, Orderitems.class);
+//                        intent.putExtra("ordercollect",ordercollect.get(position));
+//                        intent.putExtra("userphone",parent);
+//                        intent.putExtra("orderdate",date);
+//                        startActivity(intent);
 //                    }
 //                });
-            }
-        };
-        mRecyclerView.setAdapter(adapter);
+//
+//
+//
+//
+////                viewHolder.carddelete.setOnClickListener(new View.OnClickListener() {
+////                    @Override
+////                    public void onClick(View v) {
+////                        Toast.makeText(Cart.this,getItem(position).getPrname(),Toast.LENGTH_SHORT).show();
+////                        getRef(position).removeValue();
+////                        session.decreaseCartValue();
+////                        deletedatabaseimage(getItem(position).getimageid());
+////                        startActivity(new Intent(Cart.this,Cart.class));
+////                        finish();
+////                    }
+////                });
+//            }
+//        };
+//        mRecyclerView.setAdapter(adapter);
+//    }
+
+
+    private void getValues() {
+
+        //create new session object by passing application context
+        session = new UserSession(getApplicationContext());
+
+        //validating session
+        session.isLoggedIn();
+
+        //get User details if logged in
+        HashMap<String, String> user = session.getUserDetails();
+
+        shopname = user.get(UserSession.KEY_NAME);
+        shopemail = user.get(UserSession.KEY_EMAIL);
+        shopmobile = user.get(UserSession.KEY_MOBiLE);
+        System.out.println("nameemailmobile " + shopname + shopemail + shopmobile);
     }
 
-    //viewHolder for our Firebase UI
-    public static class MovieViewHolder extends RecyclerView.ViewHolder{
-
-        TextView cardname;
-        ImageView cardimage;
-        TextView cardprice;
-        TextView cardcount;
-        ImageView carddelete;
-        TextView deliverycharge;
-        TextView productid;
-        LinearLayout item_product;
-
-        View mView;
-        public MovieViewHolder(View v) {
-            super(v);
-            mView = v;
-            cardname = v.findViewById(R.id.cart_prtitle);
-            cardimage = v.findViewById(R.id.image_cartlist);
-            cardprice = v.findViewById(R.id.cart_prprice);
-            cardcount = v.findViewById(R.id.cart_prcount);
-            carddelete = v.findViewById(R.id.deletecard);
-            deliverycharge = v.findViewById(R.id.delivercharge);
-            productid = v.findViewById(R.id.productid);
-            item_product = v.findViewById(R.id.item_product_order);
-        }
-    }
 
 
 

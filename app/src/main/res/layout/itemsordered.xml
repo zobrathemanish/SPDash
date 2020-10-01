@@ -27,9 +27,10 @@
                 android:padding="20dp">
 
                 <TextView
+                    android:id="@+id/cart_prcount"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Order date/time :"
+                    android:text="2"
                     android:gravity="center_vertical"
                     android:textSize="14dp"
                     android:textStyle="bold"
@@ -45,6 +46,15 @@
                     android:textStyle="bold"
                     android:layout_weight="9"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="--> "
+                    android:gravity="center_vertical"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:layout_weight="9"/>
+
 
 
                 <ImageView
@@ -52,7 +62,7 @@
                     android:id="@+id/deletecard"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_clear_black_18dp"/>
+                    android:src="@drawable/messenger_button_send_round_shadow"/>
 
             </LinearLayout>
 

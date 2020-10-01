@@ -8,8 +8,16 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 
 import com.sajiloprint.dashboard.models.ProductView;
+import com.sajiloprint.usersession.UserSession;
+
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
+
+    private UserSession session;
+    private String name;
+    private String email;
+    private String mobile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        getValues();
     }
 
     public void profileLaunch(View view) {
@@ -42,6 +52,24 @@ public class MainActivity extends AppCompatActivity {
     public void orders(View view) {
         startActivity(new Intent(MainActivity.this, Orders.class));
     }
+
+    private void getValues() {
+
+        //create new session object by passing application context
+        session = new UserSession(getApplicationContext());
+
+        //validating session
+        session.isLoggedIn();
+
+        //get User details if logged in
+        HashMap<String, String> user = session.getUserDetails();
+
+        name = user.get(UserSession.KEY_NAME);
+        email = user.get(UserSession.KEY_EMAIL);
+        mobile = user.get(UserSession.KEY_MOBiLE);
+        System.out.println("nameemailmobile " + name + email + mobile);
+    }
+
 
 
     @Override

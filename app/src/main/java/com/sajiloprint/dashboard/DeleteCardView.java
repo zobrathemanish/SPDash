@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sajiloprint.dashboard.models.CardsModel;
-import com.sajiloprint.dashboard.models.SearchAdapter;
+import com.sajiloprint.dashboard.models.Orderbydateadapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class DeleteCardView extends AppCompatActivity {
     private TextView tvNoMovies;
     private ArrayList<String> CardList;
     private ArrayList<String> ShowList;
-    SearchAdapter searchAdapter;
+    Orderbydateadapter searchAdapter;
 
 
 

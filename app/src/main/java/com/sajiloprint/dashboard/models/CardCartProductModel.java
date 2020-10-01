@@ -17,6 +17,8 @@ public class CardCartProductModel implements Serializable {
     private float deliveryprice;
     private String finalcolor,finalshape;
     private String shopemail;
+    private String shopmobile,shopname;
+
 
 
     public CardCartProductModel() {
@@ -38,7 +40,7 @@ public class CardCartProductModel implements Serializable {
 
     }
 
-    public CardCartProductModel(int prid, int no_of_items, String useremail, String usermobile, String prname, String prprice, String prdesc, String shopemail,
+    public CardCartProductModel(int prid, int no_of_items, String useremail, String usermobile, String prname, String prprice, String prdesc, String shopemail,  String shopmobile,String shopname,
                                 String card_name, String card_company_name, String card_company_address,
                                 String card_formjob, String card_email, String card_website,
                                 String card_number, String custommessage, String uploadimageid, String primage, float deliveryprice) {
@@ -63,6 +65,8 @@ public class CardCartProductModel implements Serializable {
         this.card_number = card_number;
         this.deliveryprice=deliveryprice;
         this.shopemail = shopemail;
+        this.shopmobile = shopmobile;
+        this.shopname = shopname;
 
     }
 
@@ -84,24 +88,24 @@ public class CardCartProductModel implements Serializable {
         this.finalshape = finalshape;
     }
 
-    public CardCartProductModel(int prid, int no_of_items, String useremail, String usermobile, String prname, String prprice, String prdesc,
-                                String custommessage, String uploadimageid, String primage, float deliveryprice) {
+//    public CardCartProductModel(int prid, int no_of_items, String useremail, String usermobile, String prname, String prprice, String prdesc,
+//                                String custommessage, String uploadimageid, String primage, float deliveryprice) {
+//
+//        this.prid = prid;
+//        this.no_of_items = no_of_items;
+//        this.useremail = useremail;
+//        this.usermobile = usermobile;
+//        this.prname = prname;
+//        this.prprice = prprice;
+//        this.primage = primage;
+//        this.prdesc = prdesc;
+//        this.message_body = custommessage;
+//        this.uploadimageid = uploadimageid;
+//        this.deliveryprice=deliveryprice;
+//
+//    }
 
-        this.prid = prid;
-        this.no_of_items = no_of_items;
-        this.useremail = useremail;
-        this.usermobile = usermobile;
-        this.prname = prname;
-        this.prprice = prprice;
-        this.primage = primage;
-        this.prdesc = prdesc;
-        this.message_body = custommessage;
-        this.uploadimageid = uploadimageid;
-        this.deliveryprice=deliveryprice;
-
-    }
-
-    public CardCartProductModel(int prid, int no_of_items, String useremail, String usermobile, String prname, String prprice, String prdesc, String shopemail,
+    public CardCartProductModel(int prid, int no_of_items, String useremail, String usermobile, String prname, String prprice, String prdesc, String shopemail,  String shopmobile,String shopname,
                                 String custommessage, String uploadimageid, String primage, float deliveryprice) {
         this.prid = prid;
         this.no_of_items = no_of_items;
@@ -115,6 +119,8 @@ public class CardCartProductModel implements Serializable {
         this.uploadimageid = uploadimageid;
         this.deliveryprice = deliveryprice;
         this.shopemail = shopemail;
+        this.shopmobile = shopmobile;
+        this.shopname = shopname;
 
     }
 
@@ -303,6 +309,23 @@ public class CardCartProductModel implements Serializable {
     public void setShopemail(String shopemail) {
         this.shopemail = shopemail;
     }
+
+    public String getShopmobile() {
+        return shopmobile;
+    }
+
+    public void setShopmobile(String shopmobile) {
+        this.shopmobile = shopmobile;
+    }
+
+    public String getShopname() {
+        return shopname;
+    }
+
+    public void setShopname(String shopname) {
+        this.shopname = shopname;
+    }
+
 
 
 }

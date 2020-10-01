@@ -12,7 +12,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Orderitems"></activity>
+        <activity android:name=".ItemsList"></activity>
+        <activity android:name=".Orderitems" />
         <activity android:name=".Orders" />
         <activity
             android:name=".MainActivity"

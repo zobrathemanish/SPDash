@@ -21,7 +21,7 @@ import com.sajiloprint.dashboard.models.CardsModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.sajiloprint.dashboard.models.SearchAdapter;
+import com.sajiloprint.dashboard.models.Orderbydateadapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class AddCardview extends AppCompatActivity {
     private TextView tvNoMovies;
     private ArrayList<String> CardList;
     private ArrayList<String> ShowList;
-    SearchAdapter searchAdapter;
+    Orderbydateadapter searchAdapter;
 
 
 

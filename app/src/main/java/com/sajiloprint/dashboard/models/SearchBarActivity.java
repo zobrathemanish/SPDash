@@ -31,7 +31,7 @@ public class SearchBarActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     ArrayList<String> cardNameList;
    // ArrayList<GenericProductModel> ItemList;
-    SearchAdapter searchAdapter;
+    Orderbydateadapter searchAdapter;
     private LottieAnimationView tv_no_item;
 
 
@@ -114,7 +114,7 @@ public class SearchBarActivity extends AppCompatActivity {
 
                 }
 
-                searchAdapter = new SearchAdapter(SearchBarActivity.this,cardNameList);
+                searchAdapter = new Orderbydateadapter(SearchBarActivity.this,cardNameList);
                 recyclerView.setAdapter(searchAdapter);
 
             }

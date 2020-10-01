@@ -16,6 +16,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.sajiloprint.usersession.UserSession;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,6 +31,10 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference();
+    private UserSession session;
+    private String username, phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +62,9 @@ public class LoginActivity extends AppCompatActivity {
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
+        session = new UserSession(getApplicationContext());
+
+
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = inputEmail.getText().toString();
+                final String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
@@ -99,6 +114,44 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
+////                                    session.createLoginSession( name, email, password );
+//                                    myRef.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+//                                        @Override
+//                                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                                                Iterable<DataSnapshot> children = snapshot.getChildren();
+//                                                for (DataSnapshot childrenSnapshot : children) {
+//                                                    if(childrenSnapshot.getKey().equals("Email") && childrenSnapshot.getValue().equals(email)) {
+//
+//                                                         username = childrenSnapshot.child("Username").getValue(String.class);
+//                                                         phone =  childrenSnapshot.child("Phone").getValue(String.class);
+//                                                        System.out.println("username and phone is " + username + phone);
+//
+//                                                        break;
+//                                                    }
+////                                                    if (childrenSnapshot.getKey().equals("Username")) {
+////                                                        String userName = Objects.requireNonNull(childrenSnapshot.getValue()).toString();
+////                                                        break;
+////                                                    }
+////                                                    if(childrenSnapshot.getKey().equals("phonenumber") && childrenSnapshot.getValue().equals(email)) {
+////                                                        String phone = Objects.requireNonNull(childrenSnapshot.getValue()).toString();
+////                                                        break;
+////                                                    }
+//
+//                                                }
+//                                            }
+//
+//                                            }
+//
+//                                        @Override
+//                                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                                        }
+//                                    });
+
+//                                    session.createLoginSession(username, email, phone);
+
+
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();

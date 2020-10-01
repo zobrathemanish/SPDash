@@ -23,11 +23,12 @@ public class SubCardsmodel implements Serializable {
     public List<String> productimages;
     public String shopemail;
     public String uploadimageid;
+    private String shopmobile,shopname;
 
     public SubCardsmodel() {
     }
 
-    public SubCardsmodel(int cardid, String cardname, String cardimage, String carddiscription, float cardprice, String title, String size,float height, float width, String bulkdescription, String shopemail, List<String> productimages) {
+    public SubCardsmodel(int cardid, String cardname, String cardimage, String carddiscription, float cardprice, String title, String size,float height, float width, String bulkdescription, String shopemail, String shopmobile,String shopname, List<String> productimages) {
         this.cardid = cardid;
         this.cardname = cardname;
         this.cardimage = cardimage;
@@ -40,9 +41,11 @@ public class SubCardsmodel implements Serializable {
         this.productimages = productimages;
         this.height = height;
         this.width = width;
+        this.shopmobile = shopmobile;
+        this.shopname = shopname;
     }
 
-    public SubCardsmodel(int pid, String name, String image, String desc, float price, String shopemail, String uploadimageid) {
+    public SubCardsmodel(int pid, String name, String image, String desc, float price, String shopemail, String shopmobile,String shopname, String uploadimageid) {
         this.cardid = pid;
         this.cardname = name;
         this.cardimage = image;
@@ -50,10 +53,12 @@ public class SubCardsmodel implements Serializable {
         this.cardprice = price;
         this.shopemail = shopemail;
         this.uploadimageid = uploadimageid;
+        this.shopmobile = shopmobile;
+        this.shopname = shopname;
 
     }
 
-    public SubCardsmodel(int pid, String name, String image, String desc, float price,String bulkdescription, String shopemail, List<String> productimages) {
+    public SubCardsmodel(int pid, String name, String image, String desc, float price,String bulkdescription, String shopemail, String shopname,String shopmobile, List<String> productimages) {
         this.cardid = pid;
         this.cardname = name;
         this.cardimage = image;
@@ -62,7 +67,10 @@ public class SubCardsmodel implements Serializable {
         this.shopemail = shopemail;
         this.productimages = productimages;
         this.bulkdescription = bulkdescription;
+        this.shopmobile = shopmobile;
+        this.shopname = shopname;
     }
+
 
     public String getCardname() {
         return cardname;
@@ -146,6 +154,25 @@ public class SubCardsmodel implements Serializable {
 
     public int getCardid() {return cardid;}
     public void setCardid(int cardid) {this.cardid = cardid;}
+
+    public String getShopmobile() {
+        return shopmobile;
+    }
+
+    public void setShopmobile(String shopmobile) {
+        this.shopmobile = shopmobile;
+    }
+
+    public String getShopname() {
+        return shopname;
+    }
+
+    public void setShopname(String shopname) {
+        this.shopname = shopname;
+    }
+
+
+
 
 
 

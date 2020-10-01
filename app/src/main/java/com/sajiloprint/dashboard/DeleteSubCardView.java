@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.appcompat.widget.Toolbar;
 
-import android.os.Parcelable;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
@@ -32,12 +31,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.sajiloprint.dashboard.models.CardsModel;
-import com.sajiloprint.dashboard.models.SearchAdapter;
+import com.sajiloprint.dashboard.models.Orderbydateadapter;
 import com.sajiloprint.dashboard.models.SubCardsmodel;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class DeleteSubCardView extends AppCompatActivity {
@@ -53,7 +50,7 @@ public class DeleteSubCardView extends AppCompatActivity {
     private TextView tvNoMovies;
     private ArrayList<String> CardList;
     private ArrayList<String> ShowList;
-    SearchAdapter searchAdapter;
+    Orderbydateadapter searchAdapter;
 
 
 

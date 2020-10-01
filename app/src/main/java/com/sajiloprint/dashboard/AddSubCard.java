@@ -40,10 +40,12 @@ import com.sajiloprint.dashboard.models.SubCardsmodel;
 import com.sajiloprint.multipleimageselect.activities.AlbumSelectActivity;
 import com.sajiloprint.multipleimageselect.helpers.Constants;
 import com.sajiloprint.multipleimageselect.models.Image;
+import com.sajiloprint.usersession.UserSession;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -77,6 +79,9 @@ public class AddSubCard extends AppCompatActivity {
     private Uri imageuri;
     private String image_url="null";
     private KProgressHUD progressDialog;
+    private UserSession session;
+    private String shopname;
+    private String shopemail,shopmobile;
 
 
 
@@ -109,6 +114,8 @@ public class AddSubCard extends AppCompatActivity {
         card = bundle.getString("cardname");
 
         category = card;
+
+        getValues();
 
 //        if(!cardimage.getText().toString().equals("")){
 //            uploadflag = true;
@@ -222,7 +229,7 @@ public class AddSubCard extends AppCompatActivity {
         //Creating a movie object with user defined variables
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         System.out.println("firebaseImgAddresses" + firebaseImgAddresses);
-        SubCardsmodel movie = new SubCardsmodel(pid,name,image,desc,price,bulkdescription, mAuth.getCurrentUser().getEmail(),firebaseImgAddresses);
+        SubCardsmodel movie = new SubCardsmodel(pid,name,image,desc,price,bulkdescription, mAuth.getCurrentUser().getEmail(),shopname,shopmobile,firebaseImgAddresses);
         //referring to movies node and setting the values from movie object to that location
         mDatabaseReference.child("Products").child(category).push().setValue(movie);
 
@@ -395,7 +402,22 @@ public class AddSubCard extends AppCompatActivity {
         }
     }
 
+    private void getValues() {
 
+        //create new session object by passing application context
+        session = new UserSession(getApplicationContext());
+
+        //validating session
+        session.isLoggedIn();
+
+        //get User details if logged in
+        HashMap<String, String> user = session.getUserDetails();
+
+        shopname = user.get(UserSession.KEY_NAME);
+        shopemail = user.get(UserSession.KEY_EMAIL);
+        shopmobile = user.get(UserSession.KEY_MOBiLE);
+        System.out.println("nameemailmobile " + shopname + shopemail + shopmobile);
+    }
 
 
 
