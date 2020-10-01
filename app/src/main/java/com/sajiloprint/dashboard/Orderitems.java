@@ -76,10 +76,11 @@ public class Orderitems extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         ordercollect =  (CardCartProductModel) getIntent().getSerializableExtra("ordercollect");
-        String parent = bundle.get("userphone").toString();
+        String shopmobile = bundle.get("shopmobile").toString();
+//        String parent = bundle.get("userphone").toString();
         String date = bundle.get("orderdate").toString();
 
-        getuserdata(parent,date);
+        getuserdata(shopmobile, date);
         productid.setText(Integer.toString(ordercollect.getPrid()));
         productname.setText(ordercollect.getPrname());
         productprice.setText(ordercollect.getPrprice());
@@ -94,8 +95,8 @@ public class Orderitems extends AppCompatActivity {
 
     }
 
-    public void getuserdata(final String parent, final String date){
-        mDatabaseReference.child("orders").child(parent).child(date).addListenerForSingleValueEvent(new ValueEventListener() {
+    public void getuserdata(final String shopmobile, final String date){
+        mDatabaseReference.child("shopusers").child("orders").child(shopmobile).child(date).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

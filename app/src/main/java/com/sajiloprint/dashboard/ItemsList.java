@@ -65,7 +65,7 @@ public class ItemsList extends AppCompatActivity {
 
     }
 
-    private void populateRecyclerView(String date) {
+    private void populateRecyclerView(final String date) {
         System.out.println("The shopmobile is " + shopmobile);
 
         //Getting reference to Firebase Database
@@ -94,8 +94,9 @@ public class ItemsList extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(ItemsList.this, Orderitems.class);
                         intent.putExtra("ordercollect",getItem(position));
+                        intent.putExtra("shopmobile",shopmobile);
 //                        intent.putExtra("userphone",parent);
-//                        intent.putExtra("orderdate",date);
+                        intent.putExtra("orderdate",date);
                         startActivity(intent);
                     }
                 });
