@@ -87,8 +87,7 @@ public class ItemsList extends AppCompatActivity {
             protected void populateViewHolder(final MovieViewHolder viewHolder, final CardCartProductModel model, final int position) {
                 System.out.println("The cardname and count is " + model.getPrname() + model.getNo_of_items());
                 viewHolder.cardname.setText(model.getPrname());
-                viewHolder.cardcount.setText("Quantity : "+model.getNo_of_items());
-
+                viewHolder.cardcount.setText(Integer.toString(model.getNo_of_items()));
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

@@ -98,11 +98,18 @@ public class uploadAdapter extends RecyclerView.Adapter<uploadAdapter.UploadView
 //        System.out.println("Itemlistfimage" + ItemList.get(position).getFimageLocation());
 //        holder.imglocation.setText(ItemList.get(position).getFimageLocation());
 
-
+//        System.out.println("The image location " + ItemList.get(position).getFimageLocation());
         Glide.with(context).load(ItemList.get(position).getFimageLocation()).asBitmap().into(holder.cardImage);
 
+//        Glide.with(mContext).load(serviceProvider.getImage())
+//                .thumbnail(0.5f)
+//                .crossFade()
+//                .placeholder(R.drawable.placeholder)
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .into(holder.iv_profile_image);
 
-//        Picasso.with(context).load(ItemList.get(position).getFimageLocation()).config(Bitmap.Config.RGB_565).resize(800, 600).into(holder.cardImage);
+
+//       Picasso.with(context).load(ItemList.get(position).getFimageLocation()).config(Bitmap.Config.RGB_565).resize(800, 600).into(holder.cardImage);
 
         holder.imglocation.setVisibility(View.GONE);
         if(ItemList.get(position).getQuantity()==null)

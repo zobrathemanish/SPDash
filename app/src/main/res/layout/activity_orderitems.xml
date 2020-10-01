@@ -12,15 +12,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="Product Order and Customer Details"
+        android:text=" Customer Details"
         android:textSize="20dp"
-        android:layout_gravity="center"
+        android:layout_gravity="left"
         android:layout_weight="1"/>
 
     <View android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorPrimary"
-        android:layout_margin="20dp"/>
+        android:layout_margin="5dp"/>
     <LinearLayout
         android:id="@+id/item_user_order"
         android:layout_width="match_parent"
@@ -30,8 +30,9 @@
 
         <ImageView
             android:id="@+id/userphoto"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="80dp"
+            android:layout_marginLeft="35dp"
             android:src="@drawable/drawerback"/>
 
         <LinearLayout  android:id="@+id/layout_user_desc"
@@ -169,10 +170,11 @@
 
         <ImageView
             android:id="@+id/image_cartlist"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="80dp"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="35dp"
             android:src="@drawable/drawerback"/>
 
         <LinearLayout  android:id="@+id/layout_item_desc"

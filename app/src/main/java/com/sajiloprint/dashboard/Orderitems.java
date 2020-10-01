@@ -153,7 +153,7 @@ public class Orderitems extends AppCompatActivity {
                                 if(imageid.equals(uploadimageid)){
                                     ImageUploadModel uploadmodel = snapshot.child(UID).getValue(ImageUploadModel.class);
                                     imageslist.add(uploadmodel);
-                                    System.out.println(uploadmodel.getQuantity());
+                                    System.out.println("fimagelocation" + uploadmodel.getFimageLocation());
 
                                 }
 
