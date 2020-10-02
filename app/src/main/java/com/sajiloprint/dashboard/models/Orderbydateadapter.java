@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.sajiloprint.dashboard.AddCardview;
 import com.sajiloprint.dashboard.ItemsList;
 import com.sajiloprint.dashboard.Orderitems;
+import com.sajiloprint.dashboard.Orders;
 import com.sajiloprint.dashboard.R;
 
 import java.util.ArrayList;
@@ -31,6 +34,7 @@ import java.util.List;
 public class Orderbydateadapter extends RecyclerView.Adapter<Orderbydateadapter.SearchViewHolder> {
     Context context;
     List<String> datelist;
+    String shopmobile;
 
 
    // ArrayList<GenericProductModel> ItemList;
@@ -40,21 +44,23 @@ public class Orderbydateadapter extends RecyclerView.Adapter<Orderbydateadapter.
     static class SearchViewHolder extends RecyclerView.ViewHolder{
         TextView carddate;
         LinearLayout datell;
-
+        ImageView deletecard;
 
 
         public SearchViewHolder( View itemView) {
             super(itemView);
             carddate = itemView.findViewById(R.id.cart_prtitle);
             datell = itemView.findViewById(R.id.datell);
+            deletecard = itemView.findViewById(R.id.deletecard);
         }
 
 
     }
 
-    public Orderbydateadapter(Context context, List<String> datelist) {
+    public Orderbydateadapter(Context context, List<String> datelist, String shopmobile) {
         this.context = context;
         this.datelist = datelist;
+        this.shopmobile = shopmobile;
     }
 
 
@@ -82,6 +88,13 @@ public class Orderbydateadapter extends RecyclerView.Adapter<Orderbydateadapter.
 
        });
 
+                holder.deletecard.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteorder(datelist.get(position),shopmobile);
+                    }
+                });
+
     }
 
 
@@ -89,6 +102,19 @@ public class Orderbydateadapter extends RecyclerView.Adapter<Orderbydateadapter.
     @Override
     public int getItemCount() {
         return datelist.size();
+
+    }
+
+    private void deleteorder(String date, String shopmobile){
+
+        //Getting reference to Firebase Database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabaseReference = database.getReference();
+
+        mDatabaseReference.child("shopusers").child("orders").child(shopmobile).child(date).removeValue();
+        Intent intent = new Intent (context, Orders.class);
+        context.startActivity(intent);
+//        Toast.makeText(context,"Deleted!! Pull to refresh!")
 
     }
 

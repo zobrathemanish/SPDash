@@ -131,7 +131,7 @@ public class Orders extends AppCompatActivity {
                                             progressDialog.dismiss();
 
                                         }
-                                        orderbydateadapter = new Orderbydateadapter(Orders.this, datelist);
+                                        orderbydateadapter = new Orderbydateadapter(Orders.this, datelist,shopmobile);
                                         mRecyclerView.setAdapter(orderbydateadapter);
                                     }
 
