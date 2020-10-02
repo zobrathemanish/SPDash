@@ -33,12 +33,14 @@ public class Orderitems extends AppCompatActivity {
     private TextView userid,productid,productname,productprice,orderdate,deliverydate;
     private TextView username,useremail;
     private TextView usermobile,paymentmode,deliverycharge,quantity,totalamount,totalamount2;
+    private TextView name_card,business_name,job_title,full_address,email,contact_num,business_web;
     private RecyclerView mRecyclerview;
     private CardCartProductModel ordercollect;
     private String date;
     private ImageView userphoto,productimage;
     private ArrayList<ImageUploadModel> imageslist;
     private uploadAdapter adapter;
+    private LinearLayout carddetailsll;
     //Getting reference to Firebase Database
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mDatabaseReference = database.getReference();
@@ -63,6 +65,17 @@ public class Orderitems extends AppCompatActivity {
         deliverydate = findViewById(R.id.deliverydate);
         userphoto = findViewById(R.id.userphoto);
         productimage = findViewById(R.id.image_cartlist);
+
+        carddetailsll = findViewById(R.id.carddetailsll);
+        name_card = findViewById(R.id.name_card);
+        business_name = findViewById(R.id.business_name);
+        job_title = findViewById(R.id.job_title);
+        full_address = findViewById(R.id.full_address);
+        email = findViewById(R.id.email);
+        contact_num = findViewById(R.id.contact_num);
+        business_web = findViewById(R.id.business_web);
+
+
         imageslist = new ArrayList<>();
 
         mRecyclerview = findViewById(R.id.userimage_recycler_view);
@@ -89,6 +102,27 @@ public class Orderitems extends AppCompatActivity {
         Picasso.with(Orderitems.this).load(ordercollect.getPrimage()).into(productimage);
 
         populateRecyclerView(ordercollect.getimageid());
+
+        if(ordercollect.getCard_name()==null && ordercollect.getCard_company_name()==null && ordercollect.getCard_formjob()==null && ordercollect.getCard_name()==null
+        && ordercollect.getCard_company_address()==null && ordercollect.getCard_email()==null && ordercollect.getCard_number()==null && ordercollect.getCard_website()==null ){
+
+            carddetailsll.setVisibility(View.GONE);
+        }
+
+        else{
+            name_card.setText("Name in Card: " +ordercollect.getCard_name() );
+            business_name.setText("Business Name:  " +ordercollect.getCard_company_name() );
+            job_title.setText("Job Title:  " +ordercollect.getCard_formjob() );
+            full_address.setText("Full Address:  " +ordercollect.getCard_company_address() );
+            email.setText("Email:  " +ordercollect.getCard_email() );
+            contact_num.setText("Contact number:  " +ordercollect.getCard_number() );
+            business_web.setText("Business Website:  " +ordercollect.getCard_website() );
+        }
+
+
+
+
+//        if()
 
 
 

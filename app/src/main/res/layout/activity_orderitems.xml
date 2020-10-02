@@ -274,18 +274,70 @@
                 android:textSize="14dp"/>
 
             <LinearLayout
+                android:id="@+id/carddetailsll"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp">
 
             <TextView
-                android:id="@+id/totalamount2"
+                android:id="@+id/name_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total Amount: "
+                android:text="Name in card:  "
                 android:textSize="14dp"
                 />
+
+            <TextView
+                android:id="@+id/business_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Business Name: "
+                android:textSize="14dp"
+                />
+
+                    <TextView
+                        android:id="@+id/job_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Job Title:  "
+                        android:textSize="14dp"
+                        />
+                    <TextView
+                        android:id="@+id/full_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Full address "
+                        android:textSize="14dp"
+                        />
+                    <TextView
+                        android:id="@+id/email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email:  "
+                        android:textSize="14dp"
+                        />
+                    <TextView
+                        android:id="@+id/contact_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mobile: "
+                        android:textSize="14dp"
+                        />
+                    <TextView
+                        android:id="@+id/business_web"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Business Website: "
+                        android:textSize="14dp"
+                        />
+
+                </LinearLayout>
 
 
 
@@ -295,8 +347,9 @@
                 android:id="@+id/userimages"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Associated images:"
+                android:text="Uploaded images by Customer:"
                 android:textSize="14dp"
+                android:layout_marginTop="10dp"
                 />
             <LinearLayout
                 android:layout_width="match_parent"
