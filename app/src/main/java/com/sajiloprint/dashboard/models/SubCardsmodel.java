@@ -28,7 +28,7 @@ public class SubCardsmodel implements Serializable {
     public SubCardsmodel() {
     }
 
-    public SubCardsmodel(int cardid, String cardname, String cardimage, String carddiscription, float cardprice, String title, String size,float height, float width, String bulkdescription, String shopemail, String shopmobile,String shopname, List<String> productimages) {
+    public SubCardsmodel(int cardid, String cardname, String cardimage, String carddiscription, float cardprice, String title, String size,float height, float width, String bulkdescription, String shopemail, String shopname,String shopmobile, List<String> productimages) {
         this.cardid = cardid;
         this.cardname = cardname;
         this.cardimage = cardimage;
@@ -45,7 +45,7 @@ public class SubCardsmodel implements Serializable {
         this.shopname = shopname;
     }
 
-    public SubCardsmodel(int pid, String name, String image, String desc, float price, String shopemail, String shopmobile,String shopname, String uploadimageid) {
+    public SubCardsmodel(int pid, String name, String image, String desc, float price, String shopemail, String shopname,String shopmobile, String uploadimageid) {
         this.cardid = pid;
         this.cardname = name;
         this.cardimage = image;

@@ -84,7 +84,6 @@ public class AddCardview extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle!=null)
             card = bundle.getString("show");
-        System.out.println("The card is" + card);
 
         tvNoMovies = (TextView) findViewById(R.id.tv_no_cards);
 
@@ -93,7 +92,6 @@ public class AddCardview extends AppCompatActivity {
 
         if (card!=null)
             category=card;
-        System.out.println("The category is " + category);
 
         shrinkAnim = new ScaleAnimation(1.15f, 0f, 1.15f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 

@@ -26,6 +26,15 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <TextView
+            android:id="@+id/shopname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:text="Manish Dangi"/>
+
+
         <Button
             android:id="@+id/ProfileLaunch"
             android:layout_width="match_parent"

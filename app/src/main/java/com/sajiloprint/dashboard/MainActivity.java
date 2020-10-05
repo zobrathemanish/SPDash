@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.sajiloprint.dashboard.models.ProductView;
 import com.sajiloprint.usersession.UserSession;
 
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private String name;
     private String email;
     private String mobile;
+    private TextView shopname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,12 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         getValues();
+
+        shopname = findViewById(R.id.shopname);
+        shopname.setText(name);
+
+
+
     }
 
     public void profileLaunch(View view) {
@@ -67,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
         name = user.get(UserSession.KEY_NAME);
         email = user.get(UserSession.KEY_EMAIL);
         mobile = user.get(UserSession.KEY_MOBiLE);
-        System.out.println("nameemailmobile " + name + email + mobile);
     }
 
 

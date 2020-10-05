@@ -106,7 +106,7 @@ public class AddPhotoSubCard extends AppCompatActivity {
         upload = findViewById(R.id.uploadimages);
 
 
-
+        System.out.println("In photosubcard");
 
         ImagesLocationList = new ArrayList<>();
         firebaseImgAddresses = new ArrayList<>();
@@ -115,6 +115,7 @@ public class AddPhotoSubCard extends AppCompatActivity {
         card = bundle.getString("cardname");
 
         category = card;
+        getValues();
 
 
 //        spinner = findViewById(R.id.categoryspinner);
@@ -243,6 +244,7 @@ public class AddPhotoSubCard extends AppCompatActivity {
         return textInputEditText.getText().toString().trim().length() <= 0;
     }
     private void myNewCard(String name, String image, String desc, float price, int pid, float height,float width, String bulkdescription) {
+        System.out.println("shopnamemobile " + shopmobile + shopname);
         //Creating a movie object with user defined variables
         String size = Float.toString(height) + " x " + Float.toString(width);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();

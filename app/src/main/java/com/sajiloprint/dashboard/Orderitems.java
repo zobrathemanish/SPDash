@@ -34,6 +34,7 @@ public class Orderitems extends AppCompatActivity {
     private TextView username,useremail;
     private TextView usermobile,paymentmode,deliverycharge,quantity,totalamount,totalamount2;
     private TextView name_card,business_name,job_title,full_address,email,contact_num,business_web;
+    private TextView finalcolor,finalshape;
     private RecyclerView mRecyclerview;
     private CardCartProductModel ordercollect;
     private String date;
@@ -41,6 +42,8 @@ public class Orderitems extends AppCompatActivity {
     private ArrayList<ImageUploadModel> imageslist;
     private uploadAdapter adapter;
     private LinearLayout carddetailsll;
+    private LinearLayout mugsdetailsll;
+    private ImageView mugcolor, mugshape;
     //Getting reference to Firebase Database
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mDatabaseReference = database.getReference();
@@ -75,6 +78,11 @@ public class Orderitems extends AppCompatActivity {
         contact_num = findViewById(R.id.contact_num);
         business_web = findViewById(R.id.business_web);
 
+        mugsdetailsll = findViewById(R.id.mugdetailsll);
+        finalcolor = findViewById(R.id.finalcolor);
+        finalshape = findViewById(R.id.finalshape);
+        mugcolor = findViewById(R.id.imgfcolor);
+        mugshape = findViewById(R.id.imgfshape);
 
         imageslist = new ArrayList<>();
 
@@ -117,6 +125,62 @@ public class Orderitems extends AppCompatActivity {
             email.setText("Email:  " +ordercollect.getCard_email() );
             contact_num.setText("Contact number:  " +ordercollect.getCard_number() );
             business_web.setText("Business Website:  " +ordercollect.getCard_website() );
+        }
+
+
+        if(ordercollect.getFinalshape()==null && ordercollect.getfinalcolor()==null){
+            mugsdetailsll.setVisibility(View.GONE);
+        }
+        else{
+            finalcolor.setText(" Colour: ");
+            finalshape.setText(" Shape: ");
+            switch(ordercollect.getFinalshape()){
+                case "shape1":
+                    int imageResource = getResources().getIdentifier("@mipmap/mugshape1", null, getPackageName());
+                    mugshape.setImageDrawable(getResources().getDrawable(imageResource));
+                    break;
+
+                case "shape2":
+                     imageResource = getResources().getIdentifier("@mipmap/shape2mug", null, getPackageName());
+                    mugshape.setImageDrawable(getResources().getDrawable(imageResource));
+                    break;
+                case "shape3":
+                     imageResource = getResources().getIdentifier("@mipmap/shape3", null, getPackageName());
+                    mugshape.setImageDrawable(getResources().getDrawable(imageResource));
+                    break;
+                case "shape4":
+                     imageResource = getResources().getIdentifier("@mipmap/shape4", null, getPackageName());
+                    mugshape.setImageDrawable(getResources().getDrawable(imageResource));
+                    break;
+                case "shape5":
+                     imageResource = getResources().getIdentifier("@mipmap/shape", null, getPackageName());
+                    mugshape.setImageDrawable(getResources().getDrawable(imageResource));
+                    break;
+            }
+            switch(ordercollect.getfinalcolor()){
+                case "color1":
+                    int imageResource = getResources().getIdentifier("@mipmap/mugcolor1", null, getPackageName());
+                    mugcolor.setImageDrawable(getResources().getDrawable(imageResource));
+                    break;
+
+                case "color2":
+                    imageResource = getResources().getIdentifier("@mipmap/mugcolor2", null, getPackageName());
+                    mugcolor.setImageDrawable(getResources().getDrawable(imageResource));
+                    break;
+                case "color3":
+                    imageResource = getResources().getIdentifier("@mipmap/mugcolor3", null, getPackageName());
+                    mugcolor.setImageDrawable(getResources().getDrawable(imageResource));
+                    break;
+                case "color4":
+                    imageResource = getResources().getIdentifier("@mipmap/mugcolor4", null, getPackageName());
+                    mugcolor.setImageDrawable(getResources().getDrawable(imageResource));
+                    break;
+                case "color5":
+                    imageResource = getResources().getIdentifier("@mipmap/mugcolor5", null, getPackageName());
+                    mugshape.setImageDrawable(getResources().getDrawable(imageResource));
+                    break;
+            }
+
         }
 
 

@@ -416,7 +416,6 @@ public class AddSubCard extends AppCompatActivity {
         shopname = user.get(UserSession.KEY_NAME);
         shopemail = user.get(UserSession.KEY_EMAIL);
         shopmobile = user.get(UserSession.KEY_MOBiLE);
-        System.out.println("nameemailmobile " + shopname + shopemail + shopmobile);
     }
 
 
