@@ -162,7 +162,6 @@ public class DeleteSubCardView extends AppCompatActivity {
                 System.out.println("asdf" + model.getShopemail());
                 if( model.getShopemail()!=null) {
                     if (model.getShopemail().equals(currentuser)) {
-                        System.out.println("inside curent");
 
                         viewHolder.cardcategory.setText(model.getCardname());
 

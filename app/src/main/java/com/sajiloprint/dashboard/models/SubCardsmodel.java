@@ -17,7 +17,7 @@ public class SubCardsmodel implements Serializable {
     public float cardprice;
     public String title;
     public String size;
-    public float height;
+    private float height;
     public float width;
     public String bulkdescription;
     public List<String> productimages;

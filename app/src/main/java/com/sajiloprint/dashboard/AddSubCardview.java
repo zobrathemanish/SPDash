@@ -3,12 +3,6 @@ package com.sajiloprint.dashboard;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
@@ -16,9 +10,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.sajiloprint.dashboard.models.CardsModel;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sajiloprint.dashboard.models.Orderbydateadapter;
@@ -27,7 +27,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class AddCardview extends AppCompatActivity {
+public class AddSubCardview extends AppCompatActivity {
 
 
     //created for firebaseui android tutorial by Vamsi Tallapudi
@@ -183,42 +183,46 @@ public class AddCardview extends AppCompatActivity {
                 if(tvNoMovies.getVisibility()== View.VISIBLE){
                     tvNoMovies.setVisibility(View.GONE);
                 }
-//                if(model.getShopmobile()!=null && model.getShopmobile().equals(currentuser)){
+                System.out.println("model.getshopemail and currentuser " + model.getShopemail() + "; " + currentuser);
+                if(model.getShopemail()!=null && model.getShopemail().equals(currentuser)){
+                    System.out.println("inside if");
                     viewHolder.cardcategory.setText(model.getCardname());
-                    Picasso.with(AddCardview.this).load(model.getCardimage()).config(Bitmap.Config.RGB_565).resize(800, 600).into(viewHolder.cardimage);
+                    Picasso.with(AddSubCardview.this).load(model.getCardimage()).config(Bitmap.Config.RGB_565).resize(800, 600).into(viewHolder.cardimage);
 
-                    if (model.getCardname().equals("Photo prints")||model.getCardname().equals("Photobooks") || model.getCardname().equals("Framed prints")
-                            || model.getCardname().equals("Magnets") || model.getCardname().equals("Wood Prints") || model.getCardname().equals("Posters")){
-                        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(AddCardview.this, AddPhotoSubCard.class);
-                                intent.putExtra("cardname", model.getCardname());
+//                    if (model.getCardname().equals("Photo prints")||model.getCardname().equals("Photobooks") || model.getCardname().equals("Framed prints")
+//                            || model.getCardname().equals("Magnets") || model.getCardname().equals("Wood Prints") || model.getCardname().equals("Posters")){
+//                        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Intent intent = new Intent(AddSubCardview.this, AddPhotoSubCard.class);
+//                                intent.putExtra("cardname", model.getCardname());
+//
+//                                startActivity(intent);
+//                            }
+//                        });
+//
+//                    }
+//                    else {
+//
+//                        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Intent intent = new Intent(AddSubCardview.this, AddSubCard.class);
+//                                intent.putExtra("cardname", model.getCardname());
+//
+//                                startActivity(intent);
+//                            }
+//                        });
+//                    }
 
-                                startActivity(intent);
-                            }
-                        });
+                }
+                else{
+                    System.out.println("inside else");
 
-                    }
-                    else {
-
-                        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(AddCardview.this, AddSubCard.class);
-                                intent.putExtra("cardname", model.getCardname());
-
-                                startActivity(intent);
-                            }
-                        });
-                    }
-
-//                }
-//                else{
-//                    viewHolder.cardcategory.setVisibility(View.GONE);
-//                    viewHolder.cardimage.setVisibility(View.GONE);
-//                    viewHolder.mView.setVisibility(View.GONE);
-//                }
+                    viewHolder.cardcategory.setVisibility(View.GONE);
+                    viewHolder.cardimage.setVisibility(View.GONE);
+                    viewHolder.mView.setVisibility(View.GONE);
+                }
 
             }
         };

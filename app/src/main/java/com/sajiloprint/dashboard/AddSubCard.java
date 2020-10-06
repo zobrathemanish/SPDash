@@ -164,11 +164,6 @@ public class AddSubCard extends AppCompatActivity {
                         else
                             myNewCard(cardName.getText().toString().trim(), cardimage.getText().toString(), carddesc.getText().toString(), Float.parseFloat(cardprice.getText().toString()), Integer.parseInt(uploadimageid),bulkdescription.getText().toString());
 
-
-
-
-
-
                     } else {
                         progressDialog.dismiss();
                         if (isEmpty(cardName)) {
@@ -235,7 +230,7 @@ public class AddSubCard extends AppCompatActivity {
 
         progressDialog.dismiss();
 
-        Intent intent = new Intent(AddSubCard.this, AddCardview.class);
+        Intent intent = new Intent(AddSubCard.this, AddSubCardview.class);
         intent.putExtra("show",category);
 
         startActivity(intent);

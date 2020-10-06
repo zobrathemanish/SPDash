@@ -251,7 +251,7 @@ public class AddPhotoSubCard extends AppCompatActivity {
         SubCardsmodel movie = new SubCardsmodel(pid,name,image,desc,price,name,size,height,width,bulkdescription, mAuth.getCurrentUser().getEmail(),shopname,shopmobile,firebaseImgAddresses);
         //referring to movies node and setting the values from movie object to that location
         mDatabaseReference.child("Products").child(category).push().setValue(movie);
-        Intent intent = new Intent(AddPhotoSubCard.this, AddCardview.class);
+        Intent intent = new Intent(AddPhotoSubCard.this, AddSubCardview.class);
         intent.putExtra("show",category);
         startActivity(intent);
 

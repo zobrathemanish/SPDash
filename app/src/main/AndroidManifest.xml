@@ -55,6 +55,8 @@
             android:theme="@style/MultipleImageSelectTheme" />
         <activity android:name="com.sajiloprint.multipleimageselect.activities.HelperActivity" />
         <activity android:name=".EditSubCard" />
+        <activity android:name=".AddSubCardview"
+            android:theme="@style/DarkTheme"/>
     </application>
 
 </manifest>
