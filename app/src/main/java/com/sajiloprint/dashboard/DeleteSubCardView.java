@@ -222,7 +222,7 @@ public class DeleteSubCardView extends AppCompatActivity {
 
         TextView cardcategory;
         ImageView cardimage;
-        ImageView carddelete;
+        TextView carddelete;
 
 
         View mView;
