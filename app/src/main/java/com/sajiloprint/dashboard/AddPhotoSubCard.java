@@ -62,7 +62,7 @@ public class AddPhotoSubCard extends AppCompatActivity {
     private Button bSubmit;
     private String category;
     private MaterialSpinner spinner;
-    private TextInputEditText bulkdescription, height, width;
+    private TextInputEditText  height, width;
 
     private TextView upload;
     private boolean uploadflag;
@@ -81,6 +81,11 @@ public class AddPhotoSubCard extends AppCompatActivity {
     private UserSession session;
     private String shopname;
     private String shopemail,shopmobile;
+    private String bulkdescription;
+    private TextInputEditText bulkquantity;
+    private TextInputEditText bulkprice;
+    private TextView bulktype;
+
 
 
     @Override
@@ -100,7 +105,12 @@ public class AddPhotoSubCard extends AppCompatActivity {
 //        productid = findViewById(R.id.productid);
         bSubmit = findViewById(R.id.b_submit);
 //        title = findViewById(R.id.title);
-        bulkdescription = findViewById(R.id.bulkdescription);
+//        bulkdescription = findViewById(R.id.bulkdescription);
+        bulkprice = findViewById(R.id.bulkcost);
+        bulkquantity = findViewById(R.id.bulkquantity);
+        bulktype = findViewById(R.id.bulkproducttype);
+
+
         height = findViewById(R.id.height);
         width = findViewById(R.id.width);
         upload = findViewById(R.id.uploadimages);
@@ -198,6 +208,7 @@ public class AddPhotoSubCard extends AppCompatActivity {
                             }
 
 
+
                         }
 
                     //to remove current fragment
@@ -248,7 +259,7 @@ public class AddPhotoSubCard extends AppCompatActivity {
         //Creating a movie object with user defined variables
         String size = Float.toString(height) + " x " + Float.toString(width);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        SubCardsmodel movie = new SubCardsmodel(pid,name,image,desc,price,name,size,height,width,bulkdescription, mAuth.getCurrentUser().getEmail(),shopname,shopmobile,firebaseImgAddresses);
+        SubCardsmodel movie = new SubCardsmodel(pid,name,image,desc,price,name,size,height,width,bulkdescription,bulkquantity.getText().toString(),bulkprice.getText().toString(), mAuth.getCurrentUser().getEmail(),shopname,shopmobile,firebaseImgAddresses);
         //referring to movies node and setting the values from movie object to that location
         mDatabaseReference.child("Products").child(category).push().setValue(movie);
         Intent intent = new Intent(AddPhotoSubCard.this, AddSubCardview.class);
@@ -260,6 +271,9 @@ public class AddPhotoSubCard extends AppCompatActivity {
     private void addImage(){
 
         uploadimageid = getordernumber();
+
+        bulkdescription = bulkquantity.getText().toString() + " " + bulktype.getText().toString() + " for Rs." + bulkprice.getText().toString();
+        System.out.println("bulk description is " + bulkdescription);
 
         Uri[] uri = new Uri[ImagesLocationList.size()];
         for (int i = 0; i < ImagesLocationList.size(); i++) {
@@ -299,7 +313,7 @@ public class AddPhotoSubCard extends AppCompatActivity {
 
                         }
                         if (firebaseImgAddresses.size() == ImagesLocationList.size())
-                            myNewCard(cardName.getText().toString().trim(), image_url, carddesc.getText().toString(), Float.parseFloat(cardprice.getText().toString()), Integer.parseInt(uploadimageid), Float.parseFloat(height.getText().toString()), Float.parseFloat(width.getText().toString()), bulkdescription.getText().toString());
+                            myNewCard(cardName.getText().toString().trim(), image_url, carddesc.getText().toString(), Float.parseFloat(cardprice.getText().toString()), Integer.parseInt(uploadimageid), Float.parseFloat(height.getText().toString()), Float.parseFloat(width.getText().toString()), bulkdescription);
 
 //
 //                        mDatabaseReference.child("ProductImages").child(uploadimageid).push().setValue((uploadimage(uploadimageid, image)));

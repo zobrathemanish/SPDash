@@ -24,11 +24,12 @@ public class SubCardsmodel implements Serializable {
     public String shopemail;
     public String uploadimageid;
     private String shopmobile,shopname;
+    private String bulkquantity,bulkprice;
 
     public SubCardsmodel() {
     }
 
-    public SubCardsmodel(int cardid, String cardname, String cardimage, String carddiscription, float cardprice, String title, String size,float height, float width, String bulkdescription, String shopemail, String shopname,String shopmobile, List<String> productimages) {
+    public SubCardsmodel(int cardid, String cardname, String cardimage, String carddiscription, float cardprice, String title, String size,float height, float width, String bulkdescription,String bulkquantity,String bulkprice, String shopemail, String shopname,String shopmobile, List<String> productimages) {
         this.cardid = cardid;
         this.cardname = cardname;
         this.cardimage = cardimage;
@@ -43,6 +44,8 @@ public class SubCardsmodel implements Serializable {
         this.width = width;
         this.shopmobile = shopmobile;
         this.shopname = shopname;
+        this.bulkquantity = bulkquantity;
+        this.bulkprice = bulkprice;
     }
 
     public SubCardsmodel(int pid, String name, String image, String desc, float price, String shopemail, String shopname,String shopmobile, String uploadimageid) {
@@ -55,6 +58,7 @@ public class SubCardsmodel implements Serializable {
         this.uploadimageid = uploadimageid;
         this.shopmobile = shopmobile;
         this.shopname = shopname;
+
 
     }
 
@@ -69,6 +73,21 @@ public class SubCardsmodel implements Serializable {
         this.bulkdescription = bulkdescription;
         this.shopmobile = shopmobile;
         this.shopname = shopname;
+    }
+
+    public SubCardsmodel(int pid, String name, String image, String desc, float price,String bulkdescription, String bulkquantity, String bulkprice, String shopemail, String shopname,String shopmobile, List<String> productimages) {
+        this.cardid = pid;
+        this.cardname = name;
+        this.cardimage = image;
+        this.carddiscription = desc;
+        this.cardprice = price;
+        this.shopemail = shopemail;
+        this.productimages = productimages;
+        this.bulkdescription = bulkdescription;
+        this.shopmobile = shopmobile;
+        this.shopname = shopname;
+        this.bulkquantity = bulkquantity;
+        this.bulkprice = bulkprice;
     }
 
 
@@ -171,9 +190,14 @@ public class SubCardsmodel implements Serializable {
         this.shopname = shopname;
     }
 
+    public String getBulkquantity(){return bulkquantity;}
+
+    public void setBulkquantity(String bulkquantity){this.bulkquantity = bulkquantity;}
 
 
+    public String getBulkprice(){return bulkquantity;}
 
+    public void setBulkprice(String bulkprice){this.bulkprice = bulkprice;}
 
 
 

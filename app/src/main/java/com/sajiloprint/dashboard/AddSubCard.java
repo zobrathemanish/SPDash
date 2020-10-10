@@ -60,7 +60,9 @@ public class AddSubCard extends AppCompatActivity {
     private TextInputEditText cardimage;
     private TextInputEditText carddesc;
     private TextInputEditText cardprice;
-    private TextInputEditText bulkdescription;
+//    private TextInputEditText bulkdescription;
+    private TextInputEditText bulkquantity;
+    private TextInputEditText bulkprice;
     //    private TextInputEditText productid;
     private String card;
 
@@ -82,6 +84,9 @@ public class AddSubCard extends AppCompatActivity {
     private UserSession session;
     private String shopname;
     private String shopemail,shopmobile;
+    private TextView bulktype;
+    private String bulkdescription;
+
 
 
 
@@ -104,14 +109,18 @@ public class AddSubCard extends AppCompatActivity {
 //        productid = findViewById(R.id.productid);
         bSubmit = findViewById(R.id.b_submit);
         upload = findViewById(R.id.uploadimages);
-        bulkdescription = findViewById(R.id.bulkdescription);
-
+//        bulkdescription = findViewById(R.id.bulkdescription);
+        bulkprice = findViewById(R.id.bulkcost);
+        bulkquantity = findViewById(R.id.bulkquantity);
+        bulktype = findViewById(R.id.bulkproducttype);
 
         ImagesLocationList = new ArrayList<>();
         firebaseImgAddresses = new ArrayList<>();
 
         Bundle bundle = getIntent().getExtras();
         card = bundle.getString("cardname");
+
+//        bulktype.setText(card);
 
         category = card;
 
@@ -162,7 +171,7 @@ public class AddSubCard extends AppCompatActivity {
                         if(uploadflag)
                         addImage();
                         else
-                            myNewCard(cardName.getText().toString().trim(), cardimage.getText().toString(), carddesc.getText().toString(), Float.parseFloat(cardprice.getText().toString()), Integer.parseInt(uploadimageid),bulkdescription.getText().toString());
+                            myNewCard(cardName.getText().toString().trim(), cardimage.getText().toString(), carddesc.getText().toString(), Float.parseFloat(cardprice.getText().toString()), Integer.parseInt(uploadimageid),bulkdescription);
 
                     } else {
                         progressDialog.dismiss();
@@ -224,7 +233,7 @@ public class AddSubCard extends AppCompatActivity {
         //Creating a movie object with user defined variables
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         System.out.println("firebaseImgAddresses" + firebaseImgAddresses);
-        SubCardsmodel movie = new SubCardsmodel(pid,name,image,desc,price,bulkdescription, mAuth.getCurrentUser().getEmail(),shopname,shopmobile,firebaseImgAddresses);
+        SubCardsmodel movie = new SubCardsmodel(pid,name,image,desc,price,bulkdescription, bulkquantity.getText().toString(),bulkprice.getText().toString(), mAuth.getCurrentUser().getEmail(),shopname,shopmobile,firebaseImgAddresses);
         //referring to movies node and setting the values from movie object to that location
         mDatabaseReference.child("Products").child(category).push().setValue(movie);
 
@@ -242,6 +251,7 @@ public class AddSubCard extends AppCompatActivity {
 
     private void addImage(){
 
+        bulkdescription = bulkquantity.getText().toString() + " " + bulktype.getText().toString() + " for Rs." + bulkprice.getText().toString();
 
 
         Uri[] uri = new Uri[ImagesLocationList.size()];
@@ -282,7 +292,7 @@ public class AddSubCard extends AppCompatActivity {
 
                         }
                         if (firebaseImgAddresses.size() == ImagesLocationList.size())
-                            myNewCard(cardName.getText().toString().trim(), image_url, carddesc.getText().toString(), Float.parseFloat(cardprice.getText().toString()), Integer.parseInt(uploadimageid),bulkdescription.getText().toString());
+                            myNewCard(cardName.getText().toString().trim(), image_url, carddesc.getText().toString(), Float.parseFloat(cardprice.getText().toString()), Integer.parseInt(uploadimageid),bulkdescription);
 
 //
 //                        mDatabaseReference.child("ProductImages").child(uploadimageid).push().setValue((uploadimage(uploadimageid, image)));
