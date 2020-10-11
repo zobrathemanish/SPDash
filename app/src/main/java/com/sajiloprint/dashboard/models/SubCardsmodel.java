@@ -195,7 +195,7 @@ public class SubCardsmodel implements Serializable {
     public void setBulkquantity(String bulkquantity){this.bulkquantity = bulkquantity;}
 
 
-    public String getBulkprice(){return bulkquantity;}
+    public String getBulkprice(){return bulkprice;}
 
     public void setBulkprice(String bulkprice){this.bulkprice = bulkprice;}
 

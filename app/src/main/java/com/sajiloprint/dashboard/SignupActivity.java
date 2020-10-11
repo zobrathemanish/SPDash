@@ -112,7 +112,8 @@ public class SignupActivity extends AppCompatActivity {
                                 Toast.makeText(SignupActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                                 FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-                                DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("shopusers").child(user.getUid());
+                                System.out.println("user uid" + user.getUid());
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("shopusers").child(user.getUid());
                                 ref.child("phonenumber").setValue(phone);
                                 ref.child("Email").setValue(email);
                                 ref.child("Username").setValue(name);
