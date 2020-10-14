@@ -249,6 +249,13 @@ public class Orders extends AppCompatActivity {
         System.out.println("nameemailmobile " + shopname + shopemail + shopmobile);
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+
 
 
 
