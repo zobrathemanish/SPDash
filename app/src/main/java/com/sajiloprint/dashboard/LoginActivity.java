@@ -114,47 +114,43 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
-////                                    session.createLoginSession( name, email, password );
-//                                    myRef.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
-//                                        @Override
-//                                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                                                Iterable<DataSnapshot> children = snapshot.getChildren();
-//                                                for (DataSnapshot childrenSnapshot : children) {
-//                                                    if(childrenSnapshot.getKey().equals("Email") && childrenSnapshot.getValue().equals(email)) {
-//
-//                                                         username = childrenSnapshot.child("Username").getValue(String.class);
-//                                                         phone =  childrenSnapshot.child("Phone").getValue(String.class);
-//                                                        System.out.println("username and phone is " + username + phone);
-//
-//                                                        break;
-//                                                    }
-////                                                    if (childrenSnapshot.getKey().equals("Username")) {
-////                                                        String userName = Objects.requireNonNull(childrenSnapshot.getValue()).toString();
-////                                                        break;
-////                                                    }
-////                                                    if(childrenSnapshot.getKey().equals("phonenumber") && childrenSnapshot.getValue().equals(email)) {
-////                                                        String phone = Objects.requireNonNull(childrenSnapshot.getValue()).toString();
-////                                                        break;
-////                                                    }
-//
-//                                                }
-//                                            }
-//
-//                                            }
-//
-//                                        @Override
-//                                        public void onCancelled(@NonNull DatabaseError error) {
-//
-//                                        }
-//                                    });
+//                                    session.createLoginSession( name, email, password );
+                                    myRef.child("shopusers").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                Iterable<DataSnapshot> children = snapshot.getChildren();
+                                                for (DataSnapshot childrenSnapshot : children) {
+                                                    if(childrenSnapshot.getKey().equals("Email") && childrenSnapshot.getValue().equals(email)) {
 
-//                                    session.createLoginSession(username, email, phone);
+                                                         username = snapshot.child("Username").getValue(String.class);
+                                                         phone =  snapshot.child("phonenumber").getValue(String.class);
+                                                        System.out.println("username and phone is " + username + phone);
+
+                                                        System.out.println("uep " + username + email + phone);
+
+                                                        session.createLoginSession(username, email, phone);
 
 
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                        startActivity(intent);
+                                                        finish();
+
+                                                    }
+
+
+                                                }
+                                            }
+
+                                            }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+
                                 }
                             }
                         });
